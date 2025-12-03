@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+@use './vars' as vars;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: vars.$font-family-Roboto;
+  background-color: vars.$bg-color-primary;
+}
+
+.main {
+  display: flex;
+  margin: auto;
+  max-width: 1440px;
+  min-height: 100vh;
+  color: vars.$font-color-primary;
+}
+
+a {
+  color: inherit;
+}

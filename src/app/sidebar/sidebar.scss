@@ -1,0 +1,20 @@
+@use '../../vars' as vars;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-width: 20%;
+  max-width: 30%;
+  background-color: vars.$bg-color-secondary;
+  border: 1px solid vars.$border-color;
+
+  & > * {
+    padding: 8px 4px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :host {
+    min-width: 200px;
+  }
+}

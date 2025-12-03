@@ -1,0 +1,24 @@
+@use '../../../vars' as vars;
+
+:host {
+  flex-grow: 1;
+
+  .navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    text-decoration: none;
+  }
+
+  .active {
+    color: vars.$font-color-accent;
+    background-color: vars.$bg-color-active;
+  }
+}
