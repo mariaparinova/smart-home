@@ -1,0 +1,11 @@
+@use '../../../vars';
+
+:host {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .title {
+    color: vars.$font-color-secondary;
+  }
+}
