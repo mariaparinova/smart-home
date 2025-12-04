@@ -8,5 +8,6 @@ import { SidebarMenu } from './sidebar-menu/sidebar-menu';
   imports: [SidebarHeader, SidebarMenu, SidebarFooter],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
+  host: { class: 'sidebar' },
 })
 export class Sidebar {}
