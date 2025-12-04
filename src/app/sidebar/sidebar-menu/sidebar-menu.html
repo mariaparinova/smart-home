@@ -1,7 +1,14 @@
 <nav class="navigation">
   @for (menuItem of menuItems; track menuItem.id) {
-    <a class="item" routerLink="{{ menuItem.linkTo }}" routerLinkActive="active">
-      <mat-icon [fontIcon]="menuItem.iconName" />
+    <a
+      class="item"
+      routerLink="{{ menuItem.linkTo }}"
+      routerLinkActive="active"
+    >
+      <mat-icon
+        [fontIcon]="menuItem.iconName"
+        class="icon"
+      />
       <span>{{ menuItem.title }}</span>
     </a>
   }

@@ -1,1 +1,9 @@
+<mat-icon
+  class="icon-menu"
+  [fontIcon]="isSidebarOpen() ? 'menu_closed' : 'menu_open'"
+  (click)="toggleSidebar()()"
+  (keydown.enter)="toggleSidebar()()"
+  aria-hidden="false"
+  aria-label="Sidebar menu icon"
+/>
 <span class="title">Smart Home UI</span>

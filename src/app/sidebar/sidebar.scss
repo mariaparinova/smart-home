@@ -5,13 +5,14 @@
   flex-direction: column;
   gap: 16px;
   padding: 16px 4px 8px;
+  min-height: 100%;
+  width: 232px;
   border: 1px solid vars.$border-color;
   background-color: vars.$bg-color-secondary;
-  transition: transform 0.3s;
-}
+  transition: width 0.3s;
 
-@media screen and (max-width: 767px) {
-  :host {
-    height: 100%;
+  &.sidebar-closed {
+    width: 54px;
+    overflow-x: hidden;
   }
 }
