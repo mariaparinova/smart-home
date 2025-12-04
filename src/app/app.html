@@ -1,4 +1,12 @@
-<main class="main">
-  <app-sidebar></app-sidebar>
+<mat-icon
+  class="icon-menu"
+  [fontIcon]="isSidebarOpen() ? 'menu_closed' : 'menu_open'"
+  (click)="toggleSidebar()"
+  (keydown.enter)="toggleSidebar()"
+  aria-hidden="false"
+  aria-label="Sidebar menu icon"
+/>
+<app-sidebar />
+<section class="content">
   <router-outlet />
-</main>
+</section>

@@ -12,14 +12,6 @@ body {
   background-color: vars.$bg-color-primary;
 }
 
-.main {
-  display: flex;
-  margin: auto;
-  max-width: 1440px;
-  min-height: 100vh;
-  color: vars.$font-color-primary;
-}
-
 a {
   color: inherit;
 }

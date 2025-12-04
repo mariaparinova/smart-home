@@ -1,11 +1,18 @@
 @use '../../../vars';
 
 :host {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  padding: 0 12px;
 
   .title {
+    position: relative;
     color: vars.$font-color-secondary;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :host {
+    .title {
+      left: 34px;
+    }
   }
 }
