@@ -1,0 +1,8 @@
+@use '../../../../../vars' as vars;
+
+:host {
+  padding: 16px 8px;
+  background-color: vars.$bg-color-secondary;
+  border: 1px solid vars.$border-color;
+  border-radius: vars.$border-radius-m;
+}

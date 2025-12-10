@@ -1,0 +1,16 @@
+<div class="content">
+  <span class="label">{{ data().label }}</span>
+  <h4>{{ data().state ? 'ON' : 'OFF' }}</h4>
+</div>
+<button
+  mat-icon-button
+  aria-label="icon"
+  (click)="handleChangeDeviceState()"
+>
+  <mat-icon
+    class="icon"
+    [fontIcon]="data().icon"
+    appHighlightActiveDevice
+    [isActive]="data().state"
+  />
+</button>

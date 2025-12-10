@@ -1,0 +1,8 @@
+@use '../../vars' as vars;
+
+.cards-list {
+  padding: 12px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+}

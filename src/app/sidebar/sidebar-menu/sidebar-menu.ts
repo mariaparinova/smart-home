@@ -10,7 +10,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class SidebarMenu {
   menuItems = [
-    { id: 'overview', title: 'Overview', iconName: 'dashboard', linkTo: '/dashboard/overview' },
+    { id: 'overview', title: 'Overview', iconName: 'dashboard', linkTo: '/dashboard' },
     { id: 'about', title: 'About', iconName: 'info', linkTo: '/about' },
   ];
 }

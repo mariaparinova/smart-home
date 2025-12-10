@@ -1,20 +1,28 @@
-import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, computed, inject, signal } from '@angular/core';
+import { TabGroup } from '../core/components/tab-group/tab-group';
+import { GlobalStore } from '../core/global-store/global-store';
+import { MultiCard } from '../core/components/cards/multi-card/multi-card';
+import { SingleCard } from '../core/components/cards/single-card/single-card';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [TabGroup, MultiCard, SingleCard],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
-  private route: ActivatedRoute = inject(ActivatedRoute);
-  activeMenuitemId = signal('');
+  store = inject(GlobalStore);
+  tabs = this.store.data().tabs.map((tab) => {
+    return {
+      id: tab.id,
+      title: tab.title,
+    };
+  });
 
-  constructor() {
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      this.activeMenuitemId.set(id || 'overview');
-    });
-  }
+  activeTabId = signal<string>(this.tabs[0].id);
+  tabData = computed(() => this.store.data().tabs.find((tab) => tab.id === this.activeTabId())!);
+
+  setActiveTab = (tabId: string) => {
+    this.activeTabId.set(tabId);
+  };
 }

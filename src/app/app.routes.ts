@@ -5,11 +5,11 @@ import { About } from './about/about';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard/overview',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
   {
-    path: 'dashboard/:id?',
+    path: 'dashboard',
     component: Dashboard,
   },
   {

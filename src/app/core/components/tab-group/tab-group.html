@@ -1,0 +1,11 @@
+@for (dataItem of data(); track $index) {
+  <div
+    class="tab-item"
+    [class.active]="activeTabId() === dataItem.id"
+    (click)="changeActiveTab(dataItem.id)"
+    (keydown.enter)="changeActiveTab(dataItem.id)"
+    tabindex="0"
+  >
+    {{ dataItem.title }}
+  </div>
+}

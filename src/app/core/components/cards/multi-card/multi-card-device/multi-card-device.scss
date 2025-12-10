@@ -1,0 +1,25 @@
+@use '../../../../../../vars';
+
+:host {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+
+  :last-child {
+    flex-grow: 1;
+    text-align: right;
+  }
+
+  .icon {
+    color: vars.$card-icon-color;
+  }
+
+  .icon.active {
+    color: vars.$card-icon-color-active;
+  }
+
+  &.vertical-layout {
+    flex-direction: column;
+  }
+}

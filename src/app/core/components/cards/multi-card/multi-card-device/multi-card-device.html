@@ -1,0 +1,14 @@
+<mat-icon
+  class="icon"
+  [fontIcon]="data().icon"
+  appHighlightActiveDevice
+  [isActive]="data().state"
+/>
+<span>{{ data().label }}</span>
+<mat-slide-toggle
+  [id]="data().label"
+  [hideIcon]="true"
+  [checked]="data().state"
+  (change)="handleChangeDeviceState($event)"
+  aria-label="data().label"
+/>

@@ -1,5 +1,5 @@
 <nav class="navigation">
-  @for (menuItem of menuItems; track menuItem.id) {
+  @for (menuItem of menuItems; track $index) {
     <a
       class="item"
       routerLink="{{ menuItem.linkTo }}"

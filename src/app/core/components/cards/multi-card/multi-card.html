@@ -1,0 +1,34 @@
+<div class="card-header">
+  <h4>{{ data().title }}</h4>
+  @if (displayCommonToggle()) {
+    <mat-slide-toggle
+      [hideIcon]="true"
+      aria-label="data().title"
+      [checked]="isCommonToggleOn()"
+      (change)="setAllDevicesStateInCard($event)"
+    />
+  }
+</div>
+
+<div
+  class="card-content"
+  [class.vertical-layout]="isVerticalCardLayout()"
+>
+  @for (dataItem of data().items; track $index) {
+    @if (dataItem.type === 'device') {
+      <app-multi-card-device
+        [isVerticalLayout]="!isVerticalCardLayout()"
+        [data]="dataItem"
+        [tabId]="tabId()"
+        [cardId]="data().id"
+      />
+    }
+
+    @if (dataItem.type === 'sensor') {
+      <app-multi-card-sensor
+        [isVerticalLayout]="!isVerticalCardLayout()"
+        [data]="dataItem"
+      />
+    }
+  }
+</div>

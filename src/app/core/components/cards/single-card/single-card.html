@@ -1,0 +1,10 @@
+@if (sensorData(); as sensor) {
+  <app-single-card-sensor [data]="sensor" />
+}
+
+@if (deviceData()) {
+  <app-single-card-device
+    [tabId]="tabId()"
+    [cardId]="data().id"
+  />
+}
