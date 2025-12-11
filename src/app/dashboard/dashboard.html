@@ -1,20 +1,22 @@
+@let tab = tabData();
+
 <app-tab-group
-  [data]="tabs"
+  [tabData]="tabs"
   (changeTabEvent)="setActiveTab($event)"
 />
 
 <div class="cards-list">
-  @if (tabData()) {
-    @for (cardItem of tabData().cards; track cardItem.id) {
+  @if (tab) {
+    @for (cardItem of tab.cards; track cardItem.id) {
       @if (cardItem.layout === 'singleDevice') {
         <app-single-card
-          [data]="cardItem"
-          [tabId]="tabData().id"
+          [singleCardData]="cardItem"
+          [tabId]="tab.id"
         />
       } @else {
         <app-multi-card
-          [data]="cardItem"
-          [tabId]="tabData().id"
+          [multiCardData]="cardItem"
+          [tabId]="tab.id"
         />
       }
     }

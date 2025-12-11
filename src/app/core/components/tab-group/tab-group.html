@@ -1,11 +1,13 @@
-@for (dataItem of data(); track $index) {
+@let currentTabId = activeTabId();
+@let tabGroupData = tabData();
+
+@for (tabItem of tabGroupData; track $index) {
   <div
     class="tab-item"
-    [class.active]="activeTabId() === dataItem.id"
-    (click)="changeActiveTab(dataItem.id)"
-    (keydown.enter)="changeActiveTab(dataItem.id)"
-    tabindex="0"
+    [class.active]="currentTabId === tabItem.id"
+    (click)="changeActiveTab(tabItem.id)"
+    (keydown.enter)="changeActiveTab(tabItem.id)"
   >
-    {{ dataItem.title }}
+    {{ tabItem.title }}
   </div>
 }

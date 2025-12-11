@@ -14,6 +14,6 @@ import { SensorValuePipe } from '../../../../pipes/sensor-value-pipe/sensor-valu
   },
 })
 export class MultiCardSensor {
-  data = input.required<SensorData>();
+  multiCardSensorData = input.required<SensorData>();
   isVerticalLayout = input.required<boolean>();
 }

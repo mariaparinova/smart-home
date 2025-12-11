@@ -13,5 +13,5 @@ import { SensorData } from '../../../../global-store/global-store';
   },
 })
 export class SingleCardSensor {
-  data = input.required<SensorData>();
+  singleCardSensorData = input.required<SensorData>();
 }

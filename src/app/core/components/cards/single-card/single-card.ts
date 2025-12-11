@@ -12,19 +12,19 @@ import { SingleCardDevice } from './single-card-device/single-card-device';
 export class SingleCard implements OnInit {
   globalStore = inject(GlobalStore);
   tabId = input.required<string>();
-  data = input.required<CardData>();
+  singleCardData = input.required<CardData>();
   sensorData = signal<SensorData | undefined>(undefined);
 
   deviceData = computed<DeviceData | undefined>(() => {
-    const cardId = this.data().id;
-    const tab = this.globalStore.data().tabs.find((tab) => tab.id === this.tabId())!;
+    const cardId = this.singleCardData().id;
+    const tab = this.globalStore.globalStoreData().tabs.find((tab) => tab.id === this.tabId())!;
     const card = tab.cards.find((card) => card.id === cardId)!;
 
     return card.items.find((item) => item.type === 'device');
   });
 
   ngOnInit() {
-    const firstItem = this.data().items[0];
+    const firstItem = this.singleCardData().items[0];
 
     if (firstItem.type === 'sensor') {
       this.sensorData.set(firstItem);

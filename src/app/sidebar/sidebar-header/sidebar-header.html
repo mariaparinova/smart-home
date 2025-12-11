@@ -1,9 +1,13 @@
+@let isSidebarExpanded = isSidebarOpen();
+@let handleSidebarToggle = toggleSidebar();
+
 <mat-icon
   class="icon-menu"
-  [fontIcon]="isSidebarOpen() ? 'menu_closed' : 'menu_open'"
-  (click)="toggleSidebar()()"
-  (keydown.enter)="toggleSidebar()()"
+  [fontIcon]="isSidebarExpanded ? 'menu_closed' : 'menu_open'"
+  (click)="handleSidebarToggle()"
+  (keydown.enter)="handleSidebarToggle()"
   aria-hidden="false"
   aria-label="Sidebar menu icon"
 />
+
 <span class="title">Smart Home UI</span>

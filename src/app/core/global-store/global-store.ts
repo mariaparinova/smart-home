@@ -45,7 +45,7 @@ interface DeviceStateParams {
   providedIn: 'root',
 })
 export class GlobalStore {
-  data = signal<DashboardData>({
+  globalStoreData = signal<DashboardData>({
     tabs: [
       {
         id: 'overview',
@@ -242,7 +242,7 @@ export class GlobalStore {
   updateDeviceState(params: DeviceStateParams): void {
     const { tabId, cardId, deviceLabel, newState } = params;
 
-    this.data.update((currentData) => {
+    this.globalStoreData.update((currentData) => {
       const newData = structuredClone(currentData);
       const tab = newData.tabs.find((tab) => tab.id === tabId)!;
       const card = tab.cards.find((card) => card.id === cardId)!;
@@ -265,7 +265,7 @@ export class GlobalStore {
     cardId: string;
     state: boolean;
   }): void {
-    this.data.update((currentData) => {
+    this.globalStoreData.update((currentData) => {
       const newData = structuredClone(currentData);
       const tab = newData.tabs.find((tab) => tab.id === tabId)!;
       const card = tab.cards.find((card) => card.id === cardId)!;

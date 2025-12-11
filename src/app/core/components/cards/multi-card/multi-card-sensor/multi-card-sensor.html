@@ -1,15 +1,18 @@
-@if (!isVerticalLayout()) {
+@let sensorData = multiCardSensorData();
+@let verticalLayout = isVerticalLayout();
+
+@if (verticalLayout) {
+  <span>{{ sensorData.label }}</span>
   <mat-icon
     class="dashboard-icon"
-    [fontIcon]="data().icon"
+    [fontIcon]="sensorData.icon"
   />
-  <span>{{ data().label }}</span>
 } @else {
-  <span>{{ data().label }}</span>
   <mat-icon
     class="dashboard-icon"
-    [fontIcon]="data().icon"
+    [fontIcon]="sensorData.icon"
   />
+  <span>{{ sensorData.label }}</span>
 }
 
-<span>{{ data().value | sensorValue }}</span>
+<span>{{ sensorData.value | sensorValue }}</span>

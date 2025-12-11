@@ -18,8 +18,8 @@ export class SingleCardDevice {
   cardId = input.required<string>();
   globalStore = inject(GlobalStore);
 
-  data = computed<DeviceData>(() => {
-    const tab = this.globalStore.data().tabs.find((tab) => tab.id === this.tabId())!;
+  singleCardDeviceData = computed<DeviceData>(() => {
+    const tab = this.globalStore.globalStoreData().tabs.find((tab) => tab.id === this.tabId())!;
     const card = tab.cards.find((card) => card.id === this.cardId())!;
 
     return card.items.find((item) => item.type === 'device')!;
@@ -29,8 +29,8 @@ export class SingleCardDevice {
     this.globalStore.updateDeviceState({
       tabId: this.tabId(),
       cardId: this.cardId(),
-      deviceLabel: this.data().label,
-      newState: !this.data().state,
+      deviceLabel: this.singleCardDeviceData().label,
+      newState: !this.singleCardDeviceData().state,
     });
   };
 }

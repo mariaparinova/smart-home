@@ -12,7 +12,7 @@ import { SingleCard } from '../core/components/cards/single-card/single-card';
 })
 export class Dashboard {
   store = inject(GlobalStore);
-  tabs = this.store.data().tabs.map((tab) => {
+  tabs = this.store.globalStoreData().tabs.map((tab) => {
     return {
       id: tab.id,
       title: tab.title,
@@ -20,7 +20,9 @@ export class Dashboard {
   });
 
   activeTabId = signal<string>(this.tabs[0].id);
-  tabData = computed(() => this.store.data().tabs.find((tab) => tab.id === this.activeTabId())!);
+  tabData = computed(
+    () => this.store.globalStoreData().tabs.find((tab) => tab.id === this.activeTabId())!,
+  );
 
   setActiveTab = (tabId: string) => {
     this.activeTabId.set(tabId);

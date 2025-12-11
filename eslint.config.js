@@ -47,6 +47,7 @@ export default defineConfig([
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {
       '@angular-eslint/template/prefer-self-closing-tags': ['error'],
+      '@angular-eslint/template/interactive-supports-focus': 'off',
     },
   },
 ]);

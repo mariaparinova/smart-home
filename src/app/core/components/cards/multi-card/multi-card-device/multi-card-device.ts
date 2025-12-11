@@ -16,7 +16,7 @@ import { HighlightActiveDevice } from '../../../../directives/highlight-active-d
 })
 export class MultiCardDevice {
   store = inject(GlobalStore);
-  data = input.required<DeviceData>();
+  multiCardDeviceData = input.required<DeviceData>();
   tabId = input.required<string>();
   cardId = input.required<string>();
   isVerticalLayout = input.required<boolean>();
@@ -25,7 +25,7 @@ export class MultiCardDevice {
     this.store.updateDeviceState({
       tabId: this.tabId(),
       cardId: this.cardId(),
-      deviceLabel: this.data().label,
+      deviceLabel: this.multiCardDeviceData().label,
       newState: params.checked,
     });
   };

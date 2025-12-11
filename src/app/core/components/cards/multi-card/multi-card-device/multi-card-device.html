@@ -1,14 +1,18 @@
+@let deviceData = multiCardDeviceData();
+
 <mat-icon
   class="dashboard-icon"
-  [fontIcon]="data().icon"
+  [fontIcon]="deviceData.icon"
   appHighlightActiveDevice
-  [isActive]="data().state"
+  [isActive]="deviceData.state"
 />
-<span>{{ data().label }}</span>
+
+<span>{{ deviceData.label }}</span>
+
 <mat-slide-toggle
-  [id]="data().label"
+  [id]="deviceData.label"
   [hideIcon]="true"
-  [checked]="data().state"
+  [checked]="deviceData.state"
   (change)="handleChangeDeviceState($event)"
   aria-label="data().label"
 />

@@ -12,12 +12,12 @@ export interface Tab {
   styleUrl: './tab-group.scss',
 })
 export class TabGroup implements OnInit {
-  data = input.required<Tab[]>();
+  tabData = input.required<Tab[]>();
   activeTabId = signal('');
   changeTabEvent = output<string>();
 
   ngOnInit() {
-    const firstTabId = this.data()[0]?.id;
+    const firstTabId = this.tabData()[0]?.id;
 
     if (firstTabId) {
       this.activeTabId.set(firstTabId);

@@ -13,25 +13,25 @@ import { MultiCardSensor } from './multi-card-sensor/multi-card-sensor';
 export class MultiCard implements OnInit {
   globalStore = inject(GlobalStore);
   tabId = input.required<string>();
-  data = input.required<CardData>();
+  multiCardData = input.required<CardData>();
   isVerticalCardLayout = signal(false);
   displayCommonToggle = signal(true);
   isCommonToggleOn = computed(() => {
-    return this.data().items.some((item) => item.type === 'device' && item.state);
+    return this.multiCardData().items.some((item) => item.type === 'device' && item.state);
   });
 
   setAllDevicesStateInCard(params: MatSlideToggleChange) {
     this.globalStore.setAllDevicesStateInCard({
       tabId: this.tabId(),
-      cardId: this.data().id,
+      cardId: this.multiCardData().id,
       state: params.checked,
     });
   }
 
   ngOnInit() {
-    const devices = this.data().items.filter((item) => item.type === 'device');
+    const devices = this.multiCardData().items.filter((item) => item.type === 'device');
     this.displayCommonToggle.set(devices.length > 1);
 
-    this.isVerticalCardLayout.set(this.data().layout === 'verticalLayout');
+    this.isVerticalCardLayout.set(this.multiCardData().layout === 'verticalLayout');
   }
 }
