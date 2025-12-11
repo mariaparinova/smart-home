@@ -5,24 +5,22 @@
   align-items: center;
   gap: 12px;
   padding: 0 12px;
+}
 
-  .title {
-    font-weight: 600;
-    color: vars.$font-color-secondary;
-    white-space: nowrap;
-  }
+.title {
+  font-weight: 600;
+  color: vars.$font-color-secondary;
+  white-space: nowrap;
+}
 
-  .icon-menu {
-    display: none;
-    flex-shrink: 0;
-    cursor: pointer;
-  }
+.icon-menu {
+  display: none;
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 767px) {
-  :host {
-    .icon-menu {
-      display: block;
-    }
+  .icon-menu {
+    display: block;
   }
 }

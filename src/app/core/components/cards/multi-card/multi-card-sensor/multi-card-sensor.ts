@@ -9,6 +9,7 @@ import { SensorValuePipe } from '../../../../pipes/sensor-value-pipe/sensor-valu
   templateUrl: './multi-card-sensor.html',
   styleUrl: './multi-card-sensor.scss',
   host: {
+    class: 'multi-card-content',
     '[class.vertical-layout]': 'isVerticalLayout()',
   },
 })

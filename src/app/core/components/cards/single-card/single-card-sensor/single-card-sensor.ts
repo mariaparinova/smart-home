@@ -8,6 +8,9 @@ import { SensorData } from '../../../../global-store/global-store';
   imports: [MatIcon, SensorValuePipe],
   templateUrl: './single-card-sensor.html',
   styleUrl: './single-card-sensor.scss',
+  host: {
+    class: 'single-card-content',
+  },
 })
 export class SingleCardSensor {
   data = input.required<SensorData>();

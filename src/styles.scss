@@ -58,3 +58,42 @@ h4 {
   font-size: 20px;
   font-weight: 400;
 }
+
+.dashboard-icon {
+  color: vars.$card-icon-color;
+}
+
+.dashboard-icon.active {
+  color: vars.$card-icon-color-active;
+}
+
+.vertical-layout {
+  flex-direction: column;
+}
+
+.multi-card-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+
+  :last-child {
+    flex-grow: 1;
+    text-align: right;
+  }
+}
+
+.single-card-content {
+  display: flex;
+  justify-content: space-between;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .label {
+    color: vars.$font-color-secondary;
+  }
+}

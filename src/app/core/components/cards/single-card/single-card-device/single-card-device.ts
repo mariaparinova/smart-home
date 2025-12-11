@@ -9,6 +9,9 @@ import { MatIconButton } from '@angular/material/button';
   imports: [MatIcon, HighlightActiveDevice, MatIconButton],
   templateUrl: './single-card-device.html',
   styleUrl: './single-card-device.scss',
+  host: {
+    class: 'single-card-content',
+  },
 })
 export class SingleCardDevice {
   tabId = input.required<string>();

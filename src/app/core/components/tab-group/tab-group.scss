@@ -5,17 +5,17 @@
   align-items: center;
   background-color: vars.$bg-color-accent;
   cursor: pointer;
+}
 
-  .tab-item {
-    padding: 12px 24px;
+.tab-item {
+  padding: 12px 24px;
 
-    &:hover {
-      background-color: vars.$bg-color-active;
-    }
+  &:hover {
+    background-color: vars.$bg-color-active;
   }
+}
 
-  .active {
-    color: vars.$font-color-primary;
-    border-bottom: 2px solid vars.$font-color-primary;
-  }
+.active {
+  color: vars.$font-color-primary;
+  border-bottom: 2px solid vars.$font-color-primary;
 }

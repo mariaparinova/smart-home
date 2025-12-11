@@ -1,6 +1,7 @@
 @use '../../vars' as vars;
 
 :host {
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -10,9 +11,9 @@
   border: 1px solid vars.$border-color;
   background-color: vars.$bg-color-secondary;
   transition: width 0.3s;
+}
 
-  &.sidebar-closed {
-    width: 54px;
-    overflow-x: hidden;
-  }
+:host.sidebar-closed {
+  width: 54px;
+  overflow-x: hidden;
 }

@@ -8,20 +8,16 @@
   background-color: vars.$bg-color-secondary;
   border: 1px solid vars.$border-color;
   border-radius: vars.$border-radius-m;
+}
 
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .card-content {
-    display: flex;
-    gap: 16px;
-    justify-content: space-around;
-  }
-
-  .card-content.vertical-layout {
-    flex-direction: column;
-  }
+.card-content {
+  display: flex;
+  gap: 16px;
+  justify-content: space-around;
 }

@@ -7,8 +7,10 @@
   min-height: 100vh;
   color: vars.$font-color-primary;
   overflow-x: hidden;
-
-  .content {
-    flex-grow: 1;
-  }
 }
+
+.content {
+  flex-grow: 1;
+}
+
+

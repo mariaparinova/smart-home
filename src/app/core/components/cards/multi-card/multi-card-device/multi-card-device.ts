@@ -10,6 +10,7 @@ import { HighlightActiveDevice } from '../../../../directives/highlight-active-d
   templateUrl: './multi-card-device.html',
   styleUrl: './multi-card-device.scss',
   host: {
+    class: 'multi-card-content',
     '[class.vertical-layout]': 'isVerticalLayout()',
   },
 })
