@@ -7,18 +7,11 @@
 
 <div class="cards-list">
   @if (tab) {
-    @for (cardItem of tab.cards; track cardItem.id) {
-      @if (cardItem.layout === 'singleDevice') {
-        <app-single-card
-          [singleCardData]="cardItem"
-          [tabId]="tab.id"
-        />
-      } @else {
-        <app-multi-card
-          [multiCardData]="cardItem"
-          [tabId]="tab.id"
-        />
-      }
+    @for (cardItem of tab.cards; track $index) {
+      <app-multi-card
+        [multiCardData]="cardItem"
+        [tabId]="tab.id"
+      />
     }
   }
 </div>

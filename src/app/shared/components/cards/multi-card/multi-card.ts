@@ -30,6 +30,8 @@ export class MultiCard implements OnInit {
   }
 
   ngOnInit() {
+    console.log('#', this.multiCardData().id);
+
     const devices = this.multiCardData().items.filter((item) => item.type === 'device');
     this.displayCommonToggle.set(devices.length > 1);
 
