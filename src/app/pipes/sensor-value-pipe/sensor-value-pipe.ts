@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { SensorData } from '../../global-store/global-store';
+import { SensorData } from '../../dashboard/dashboard.interfaces';
 
 @Pipe({
   name: 'sensorValue',

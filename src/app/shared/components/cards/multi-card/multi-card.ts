@@ -1,8 +1,9 @@
 import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { CardData, GlobalStore } from '../../../global-store/global-store';
 import { MultiCardDevice } from './multi-card-device/multi-card-device';
 import { MultiCardSensor } from './multi-card-sensor/multi-card-sensor';
+import { DashboardService } from '../../../../dashboard/dashboard-service';
+import { CardData } from '../../../../dashboard/dashboard.interfaces';
 
 @Component({
   selector: 'app-multi-card',
@@ -11,7 +12,7 @@ import { MultiCardSensor } from './multi-card-sensor/multi-card-sensor';
   styleUrl: './multi-card.scss',
 })
 export class MultiCard implements OnInit {
-  globalStore = inject(GlobalStore);
+  dashboardService = inject(DashboardService);
   tabId = input.required<string>();
   multiCardData = input.required<CardData>();
   isVerticalCardLayout = signal(false);
@@ -21,7 +22,7 @@ export class MultiCard implements OnInit {
   });
 
   setAllDevicesStateInCard(params: MatSlideToggleChange) {
-    this.globalStore.setAllDevicesStateInCard({
+    this.dashboardService.setAllDevicesStateInCard({
       tabId: this.tabId(),
       cardId: this.multiCardData().id,
       state: params.checked,

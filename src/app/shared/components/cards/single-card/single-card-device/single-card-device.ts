@@ -1,8 +1,9 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { DeviceData, GlobalStore } from '../../../../global-store/global-store';
 import { MatIcon } from '@angular/material/icon';
-import { HighlightActiveDevice } from '../../../../directives/highlight-active-device/highlight-active-device';
 import { MatIconButton } from '@angular/material/button';
+import { DashboardService } from '../../../../../dashboard/dashboard-service';
+import { DeviceData } from '../../../../../dashboard/dashboard.interfaces';
+import { HighlightActiveDevice } from '../../../../../directives/highlight-active-device/highlight-active-device';
 
 @Component({
   selector: 'app-single-card-device',
@@ -16,10 +17,10 @@ import { MatIconButton } from '@angular/material/button';
 export class SingleCardDevice {
   tabId = input.required<string>();
   cardId = input.required<string>();
-  globalStore = inject(GlobalStore);
+  globalStore = inject(DashboardService);
 
   singleCardDeviceData = computed<DeviceData>(() => {
-    const tab = this.globalStore.globalStoreData().tabs.find((tab) => tab.id === this.tabId())!;
+    const tab = this.globalStore.dashboardMockData().tabs.find((tab) => tab.id === this.tabId())!;
     const card = tab.cards.find((card) => card.id === this.cardId())!;
 
     return card.items.find((item) => item.type === 'device')!;

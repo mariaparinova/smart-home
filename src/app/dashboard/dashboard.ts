@@ -1,8 +1,8 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { TabGroup } from '../core/components/tab-group/tab-group';
-import { GlobalStore } from '../core/global-store/global-store';
-import { MultiCard } from '../core/components/cards/multi-card/multi-card';
-import { SingleCard } from '../core/components/cards/single-card/single-card';
+import { TabGroup } from '../shared/components/tab-group/tab-group';
+import { MultiCard } from '../shared/components/cards/multi-card/multi-card';
+import { SingleCard } from '../shared/components/cards/single-card/single-card';
+import { DashboardService } from './dashboard-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +11,8 @@ import { SingleCard } from '../core/components/cards/single-card/single-card';
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
-  store = inject(GlobalStore);
-  tabs = this.store.globalStoreData().tabs.map((tab) => {
+  dashboardService = inject(DashboardService);
+  tabs = this.dashboardService.dashboardMockData().tabs.map((tab) => {
     return {
       id: tab.id,
       title: tab.title,
@@ -21,7 +21,8 @@ export class Dashboard {
 
   activeTabId = signal<string>(this.tabs[0].id);
   tabData = computed(
-    () => this.store.globalStoreData().tabs.find((tab) => tab.id === this.activeTabId())!,
+    () =>
+      this.dashboardService.dashboardMockData().tabs.find((tab) => tab.id === this.activeTabId())!,
   );
 
   setActiveTab = (tabId: string) => {

@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { SensorValuePipe } from '../../../../pipes/sensor-value-pipe/sensor-value-pipe';
-import { SensorData } from '../../../../global-store/global-store';
+import { SensorValuePipe } from '../../../../../pipes/sensor-value-pipe/sensor-value-pipe';
+import { SensorData } from '../../../../../dashboard/dashboard.interfaces';
 
 @Component({
   selector: 'app-single-card-sensor',

@@ -1,11 +1,11 @@
 import { Component, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { SensorData } from '../../../../global-store/global-store';
-import { SensorValuePipe } from '../../../../pipes/sensor-value-pipe/sensor-value-pipe';
+import { SensorData } from '../../../../../dashboard/dashboard.interfaces';
+import { SensorValuePipe } from '../../../../../pipes/sensor-value-pipe/sensor-value-pipe';
 
 @Component({
   selector: 'app-multi-card-sensor',
-  imports: [MatIcon, SensorValuePipe, SensorValuePipe],
+  imports: [MatIcon, SensorValuePipe],
   templateUrl: './multi-card-sensor.html',
   styleUrl: './multi-card-sensor.scss',
   host: {
