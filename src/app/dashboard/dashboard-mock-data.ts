@@ -1,4 +1,4 @@
-import { DashboardData } from './dashboard.interfaces';
+import { DashboardData } from './models/dashboard.models';
 
 export const dashboardMockData: DashboardData = {
   tabs: [

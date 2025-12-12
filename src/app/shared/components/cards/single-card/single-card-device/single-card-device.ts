@@ -1,9 +1,9 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
-import { DashboardService } from '../../../../../dashboard/dashboard-service';
-import { DeviceData } from '../../../../../dashboard/dashboard.interfaces';
+import { CardData, DeviceData, TabContent } from '../../../../../dashboard/models/dashboard.models';
 import { HighlightActiveDevice } from '../../../../../directives/highlight-active-device/highlight-active-device';
+import { DashboardService } from '../../../../../dashboard/services/dashboard-service';
 
 @Component({
   selector: 'app-single-card-device',
@@ -15,19 +15,21 @@ import { HighlightActiveDevice } from '../../../../../directives/highlight-activ
   },
 })
 export class SingleCardDevice {
+  private dashboardService = inject(DashboardService);
   tabId = input.required<string>();
   cardId = input.required<string>();
-  globalStore = inject(DashboardService);
 
   singleCardDeviceData = computed<DeviceData>(() => {
-    const tab = this.globalStore.dashboardMockData().tabs.find((tab) => tab.id === this.tabId())!;
-    const card = tab.cards.find((card) => card.id === this.cardId())!;
+    const tab = this.dashboardService
+      .dashboardMockData()
+      .tabs.find((tab: TabContent) => tab.id === this.tabId())!;
+    const card = tab.cards.find((card: CardData) => card.id === this.cardId())!;
 
     return card.items.find((item) => item.type === 'device')!;
   });
 
   handleChangeDeviceState = () => {
-    this.globalStore.updateDeviceState({
+    this.dashboardService.updateDeviceState({
       tabId: this.tabId(),
       cardId: this.cardId(),
       deviceLabel: this.singleCardDeviceData().label,

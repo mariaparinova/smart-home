@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-sidebar-header',
-  imports: [MatIcon],
+  imports: [MatIcon, MatIconButton],
   templateUrl: './sidebar-header.html',
   styleUrl: './sidebar-header.scss',
 })

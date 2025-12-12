@@ -1,24 +1,15 @@
-@let tab = tabData();
+@let tabId = activeTabId();
 
-<app-tab-group
-  [tabData]="tabs"
-  (changeTabEvent)="setActiveTab($event)"
-/>
-
-<div class="cards-list">
-  @if (tab) {
-    @for (cardItem of tab.cards; track cardItem.id) {
-      @if (cardItem.layout === 'singleDevice') {
-        <app-single-card
-          [singleCardData]="cardItem"
-          [tabId]="tab.id"
-        />
-      } @else {
-        <app-multi-card
-          [multiCardData]="cardItem"
-          [tabId]="tab.id"
-        />
-      }
-    }
+<mat-tab-group
+  (selectedTabChange)="setActiveTab($event)"
+  [animationDuration]="0"
+>
+  @for (tab of tabs; track $index) {
+    <mat-tab
+      [label]="tab.title"
+      [id]="tab.id"
+    >
+      <app-cards-list [activeTabId]="tabId" />
+    </mat-tab>
   }
-</div>
+</mat-tab-group>

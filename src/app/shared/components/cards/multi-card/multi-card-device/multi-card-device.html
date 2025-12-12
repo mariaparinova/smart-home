@@ -14,5 +14,5 @@
   [hideIcon]="true"
   [checked]="deviceData.state"
   (change)="handleChangeDeviceState($event)"
-  aria-label="data().label"
+  [aria-label]="deviceData.label"
 />

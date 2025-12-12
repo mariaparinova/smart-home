@@ -1,8 +1,8 @@
 import { Component, inject, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { DashboardService } from '../../../../../dashboard/dashboard-service';
-import { DeviceData } from '../../../../../dashboard/dashboard.interfaces';
+import { DashboardService } from '../../../../../dashboard/services/dashboard-service';
+import { DeviceData } from '../../../../../dashboard/models/dashboard.models';
 import { HighlightActiveDevice } from '../../../../../directives/highlight-active-device/highlight-active-device';
 
 @Component({
@@ -16,7 +16,7 @@ import { HighlightActiveDevice } from '../../../../../directives/highlight-activ
   },
 })
 export class MultiCardDevice {
-  dashboardService = inject(DashboardService);
+  private dashboardService = inject(DashboardService);
   multiCardDeviceData = input.required<DeviceData>();
   tabId = input.required<string>();
   cardId = input.required<string>();

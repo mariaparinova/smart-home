@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
-import { dashboardMockData } from './dashboard-mock-data';
-import { DashboardData, DeviceData } from './dashboard.interfaces';
+import { dashboardMockData } from '../dashboard-mock-data';
+import { DashboardData, DeviceData } from '../models/dashboard.models';
 
 interface DeviceStateParams {
   tabId: string;
@@ -54,5 +54,9 @@ export class DashboardService {
 
       return newData;
     });
+  }
+
+  getDataByTabId(tabId: string) {
+    return this.dashboardMockData().tabs.find((tab) => tab.id === tabId);
   }
 }

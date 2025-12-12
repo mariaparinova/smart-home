@@ -20,6 +20,10 @@
 }
 
 @media screen and (max-width: 767px) {
+  :host {
+    padding: 0;
+  }
+
   .icon-menu {
     display: block;
   }

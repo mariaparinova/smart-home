@@ -28,6 +28,15 @@ html {
       state-layer-size: 22px,
     )
   );
+
+  @include mat.tabs-overrides(
+    (
+      divider-height: 2px,
+      active-focus-indicator-color: vars.$font-color-primary,
+      active-hover-indicator-color: vars.$font-color-primary,
+      active-indicator-color: vars.$font-color-primary,
+    )
+  );
 }
 
 * {

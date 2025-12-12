@@ -40,6 +40,7 @@ export default defineConfig([
       'unicorn/consistent-function-scoping': 'off',
       'unicorn/no-useless-undefined': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
+      'unicorn/prefer-global-this': 'off'
     },
   },
   {

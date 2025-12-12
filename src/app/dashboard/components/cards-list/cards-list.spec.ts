@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabGroup } from './tab-group';
+import { CardsList } from './cards-list';
 
-describe('TabGroup', () => {
-  let component: TabGroup;
-  let fixture: ComponentFixture<TabGroup>;
+describe('CardsList', () => {
+  let component: CardsList;
+  let fixture: ComponentFixture<CardsList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TabGroup],
+      imports: [CardsList],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TabGroup);
+    fixture = TestBed.createComponent(CardsList);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

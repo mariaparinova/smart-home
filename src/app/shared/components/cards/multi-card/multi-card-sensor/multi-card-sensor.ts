@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { SensorData } from '../../../../../dashboard/dashboard.interfaces';
+import { SensorData } from '../../../../../dashboard/models/dashboard.models';
 import { SensorValuePipe } from '../../../../../pipes/sensor-value-pipe/sensor-value-pipe';
 
 @Component({

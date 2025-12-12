@@ -1,18 +1,19 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { TabGroup } from '../shared/components/tab-group/tab-group';
-import { MultiCard } from '../shared/components/cards/multi-card/multi-card';
-import { SingleCard } from '../shared/components/cards/single-card/single-card';
-import { DashboardService } from './dashboard-service';
+import { Component, inject, signal } from '@angular/core';
+import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
+import { TabContent } from './models/dashboard.models';
+import { CardsList } from './components/cards-list/cards-list';
+import { DashboardService } from './services/dashboard-service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [TabGroup, MultiCard, SingleCard],
+  imports: [MatTab, CardsList, MatTabGroup],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
-  dashboardService = inject(DashboardService);
-  tabs = this.dashboardService.dashboardMockData().tabs.map((tab) => {
+  private dashboardService = inject(DashboardService);
+
+  tabs = this.dashboardService.dashboardMockData().tabs.map((tab: TabContent) => {
     return {
       id: tab.id,
       title: tab.title,
@@ -20,12 +21,15 @@ export class Dashboard {
   });
 
   activeTabId = signal<string>(this.tabs[0].id);
-  tabData = computed(
-    () =>
-      this.dashboardService.dashboardMockData().tabs.find((tab) => tab.id === this.activeTabId())!,
-  );
 
-  setActiveTab = (tabId: string) => {
+  setActiveTab = (params: MatTabChangeEvent) => {
+    const tabId = params.tab.id;
+
+    if (!tabId) {
+      console.error('Tab id is not defined');
+      return;
+    }
+
     this.activeTabId.set(tabId);
   };
 }
