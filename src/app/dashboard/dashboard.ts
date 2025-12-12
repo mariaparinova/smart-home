@@ -26,7 +26,7 @@ export class Dashboard {
     const tabId = params.tab.id;
 
     if (!tabId) {
-      console.error('Tab id is not defined');
+      console.error(`Tab id is not defined. Tab index: "${params.index}", Event: ${params}`);
       return;
     }
 

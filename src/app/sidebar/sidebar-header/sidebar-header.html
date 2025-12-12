@@ -3,13 +3,12 @@
 
 <button
   mat-icon-button
-  aria-label="icon"
+  aria-label="Toggle sidebar"
   (click)="handleSidebarToggle()"
 >
   <mat-icon
     class="icon-menu"
     [fontIcon]="isSidebarExpanded ? 'menu_closed' : 'menu_open'"
-    aria-hidden="false"
     aria-label="Sidebar menu icon"
   />
 </button>
