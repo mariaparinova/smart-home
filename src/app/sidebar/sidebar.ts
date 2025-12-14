@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, signal } from '@angular/core';
 import { SidebarHeader } from './sidebar-header/sidebar-header';
 import { SidebarFooter } from './sidebar-footer/sidebar-footer';
 import { SidebarMenu } from './sidebar-menu/sidebar-menu';
@@ -14,12 +14,23 @@ const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
     '[class.sidebar-closed]': '!isSidebarOpen()',
   },
 })
-export class Sidebar {
+export class Sidebar implements OnDestroy {
   isSidebarOpen = signal(true);
   isMobile = signal(false);
+  mediaQuery: MediaQueryList | undefined;
 
   constructor() {
-    this.addMediaQueryListener();
+    if (typeof window !== 'undefined') {
+      this.mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+      this.handleMobileStateChange(this.mediaQuery.matches);
+      this.mediaQuery.addEventListener('change', this.mediaQueryListener);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this?.mediaQuery) {
+      this.mediaQuery.removeEventListener('change', this.mediaQueryListener);
+    }
   }
 
   private handleMobileStateChange(isCurrentMobile: boolean) {
@@ -32,17 +43,9 @@ export class Sidebar {
     }
   }
 
-  private addMediaQueryListener() {
-    if (typeof window !== 'undefined') {
-      const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
-
-      this.handleMobileStateChange(mediaQuery.matches);
-
-      mediaQuery.addEventListener('change', (event) => {
-        this.handleMobileStateChange(event.matches);
-      });
-    }
-  }
+  private mediaQueryListener = (event: MediaQueryListEvent) => {
+    this.handleMobileStateChange(event.matches);
+  };
 
   toggleSidebar = () => {
     this.isSidebarOpen.update((current) => !current);
