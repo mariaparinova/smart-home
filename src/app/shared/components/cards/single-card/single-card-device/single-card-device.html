@@ -1,0 +1,19 @@
+@let deviceData = singleCardDeviceData();
+
+<div class="content">
+  <span class="label">{{ deviceData.label }}</span>
+  <h4>{{ deviceData.state ? 'ON' : 'OFF' }}</h4>
+</div>
+
+<button
+  mat-icon-button
+  aria-label="icon"
+  (click)="handleChangeDeviceState()"
+>
+  <mat-icon
+    class="dashboard-icon"
+    [fontIcon]="deviceData.icon"
+    appHighlightActiveDevice
+    [isActive]="deviceData.state"
+  />
+</button>

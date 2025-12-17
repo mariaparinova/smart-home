@@ -3,40 +3,12 @@
 :host {
   display: flex;
   margin: auto;
-  max-width: 1440px;
+  max-width: 1200px;
   min-height: 100vh;
   color: vars.$font-color-primary;
   overflow-x: hidden;
-
-  .icon-menu {
-    display: none;
-  }
-
-  .content {
-    flex-grow: 1;
-  }
 }
 
-@media screen and (max-width: 767px) {
-  :host {
-    .icon-menu {
-      position: absolute;
-      top: 14px;
-      left: 16px;
-      display: block;
-      z-index: 1;
-      cursor: pointer;
-    }
-
-    .sidebar {
-      position: fixed;
-      transform: translateX(-150%);
-    }
-  }
-
-  :host.sidebar-closed {
-    .sidebar {
-      transform: translateX(0);
-    }
-  }
+.content {
+  flex-grow: 1;
 }

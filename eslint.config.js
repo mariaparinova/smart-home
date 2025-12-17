@@ -37,13 +37,18 @@ export default defineConfig([
       ],
       'unicorn/prevent-abbreviations': 'off',
       'unicorn/catch-error-name': 'off',
+      'unicorn/consistent-function-scoping': 'off',
+      'unicorn/no-useless-undefined': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
+      'unicorn/prefer-global-this': 'off'
     },
   },
   {
     files: ['**/*.html'],
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {
-      "@angular-eslint/template/prefer-self-closing-tags": ["error"]
+      '@angular-eslint/template/prefer-self-closing-tags': ['error'],
+      '@angular-eslint/template/interactive-supports-focus': 'off',
     },
   },
 ]);

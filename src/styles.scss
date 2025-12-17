@@ -1,5 +1,43 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
 @use './vars' as vars;
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+html {
+  color-scheme: dark;
+  @include mat.theme(
+    (
+      color: mat.$cyan-palette,
+      typography: Roboto,
+      density: 0,
+    )
+  );
+
+  @include mat.slide-toggle-overrides(
+    (
+      unselected-handle-size: 20px,
+      selected-handle-size: 20px,
+      pressed-handle-size: 20px,
+      track-height: 16px,
+      track-width: 40px,
+      track-outline-width: 0,
+      unselected-handle-horizontal-margin: 0,
+      state-layer-size: 22px,
+    )
+  );
+
+  @include mat.tabs-overrides(
+    (
+      divider-height: 2px,
+      active-focus-indicator-color: vars.$font-color-primary,
+      active-hover-indicator-color: vars.$font-color-primary,
+      active-indicator-color: vars.$font-color-primary,
+    )
+  );
+}
 
 * {
   margin: 0;
@@ -8,10 +46,63 @@
 }
 
 body {
-  font-family: vars.$font-family-Roboto;
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: dark;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
   background-color: vars.$bg-color-primary;
 }
 
 a {
   color: inherit;
+}
+
+h4 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.dashboard-icon {
+  color: vars.$card-icon-color;
+}
+
+.dashboard-icon.active {
+  color: vars.$card-icon-color-active;
+}
+
+.vertical-layout {
+  flex-direction: column;
+}
+
+.multi-card-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+
+  :last-child {
+    flex-grow: 1;
+    text-align: right;
+  }
+}
+
+.single-card-content {
+  display: flex;
+  justify-content: space-between;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .label {
+    color: vars.$font-color-secondary;
+  }
 }

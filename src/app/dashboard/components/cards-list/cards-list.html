@@ -1,0 +1,16 @@
+@let cards = contentForActiveTab();
+@let tabId = activeTabId();
+
+@for (card of cards; track card.id) {
+  @if (card.layout === 'singleDevice') {
+    <app-single-card
+      [singleCardData]="card"
+      [tabId]="tabId"
+    />
+  } @else {
+    <app-multi-card
+      [multiCardData]="card"
+      [tabId]="tabId"
+    />
+  }
+}

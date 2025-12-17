@@ -1,3 +1,8 @@
-<app-sidebar-header />
+@let isSidebarExpanded = isSidebarOpen();
+
+<app-sidebar-header
+  [isSidebarOpen]="isSidebarExpanded"
+  [toggleSidebar]="toggleSidebar"
+/>
 <app-sidebar-menu />
 <app-sidebar-footer />
