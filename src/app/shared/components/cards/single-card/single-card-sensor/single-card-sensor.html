@@ -1,11 +1,11 @@
-@let sensorData = singleCardSensorData();
+@let sensor = singleCardSensor();
 
 <div class="content">
-  <span class="label">{{ sensorData.label }}</span>
-  <h4>{{ sensorData.value | sensorValue }}</h4>
+  <span class="label">{{ sensor.label }}</span>
+  <h4>{{ sensor.value | sensorValue }}</h4>
 </div>
 
 <mat-icon
-  class="dashboard-icon"
-  [fontIcon]="sensorData.icon"
+  class="sensor-icon"
+  [fontIcon]="sensor.icon"
 />

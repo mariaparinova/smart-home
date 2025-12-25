@@ -1,0 +1,35 @@
+@if (dashboardResource.isLoading()) {
+  <mat-progress-spinner
+    class="spinner"
+    mode="indeterminate"
+    aria-label="Loading"
+  />
+} @else if (dashboardResource.hasValue()) {
+  @let tabList = dashboardResource.value().tabs;
+
+  @if (tabList.length) {
+    <nav
+      mat-tab-nav-bar
+      [tabPanel]="dashboardTabPanel"
+      [animationDuration]="0"
+      mat-stretch-tabs="false"
+      class="dashboard-tabs"
+    >
+      @for (tab of tabList; track $index) {
+        <a
+          mat-tab-link
+          [routerLink]="['.', tab.id]"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [active]="rla.isActive"
+        >
+          {{ tab.title }}
+        </a>
+      }
+    </nav>
+  }
+
+  <mat-tab-nav-panel #dashboardTabPanel>
+    <router-outlet />
+  </mat-tab-nav-panel>
+}

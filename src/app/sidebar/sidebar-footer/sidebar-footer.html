@@ -1,7 +1,23 @@
-<img
-  ngSrc="/rss-logo.svg"
-  alt="RSS logo"
-  height="24"
-  width="24"
-/>
-<p class="course">RS School. Angular</p>
+@let userProfile = user();
+
+@if (userProfile) {
+  <div class="user-details">
+    <div class="user-initials">{{ userProfile.initials }}</div>
+    <div class="user-full-name">{{ userProfile.fullName }}</div>
+  </div>
+  <button
+    matButton="outlined"
+    (click)="logout()"
+  >
+    Log out
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+} @else {
+  <img
+    ngSrc="/rss-logo.svg"
+    alt="RSS logo"
+    height="24"
+    width="24"
+  />
+  <p class="course">RS School. Angular</p>
+}

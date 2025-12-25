@@ -1,28 +1,29 @@
-export interface DashboardData {
-  tabs: TabContent[];
+export interface Dashboard {
+  id: string;
+  tabs: Tab[];
 }
 
-export interface TabContent {
+export interface Tab {
   id: string;
   title: string;
-  cards: CardData[];
+  cards: Card[];
 }
 
-export interface CardData {
+export interface Card {
   id: string;
   title: string;
   layout: 'horizontalLayout' | 'verticalLayout' | 'singleDevice';
-  items: (SensorData | DeviceData)[];
+  items: (Sensor | Device)[];
 }
 
-export interface DeviceData {
+export interface Device {
   type: 'device';
   icon: string;
   label: string;
   state: boolean;
 }
 
-export interface SensorData {
+export interface Sensor {
   type: 'sensor';
   icon: string;
   label: string;

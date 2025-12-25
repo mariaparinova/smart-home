@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { MultiCard } from '../../../shared/components/cards/multi-card/multi-card';
 import { SingleCard } from '../../../shared/components/cards/single-card/single-card';
-import { DashboardService } from '../../services/dashboard-service';
+import { DashboardService } from '../../../shared/services/dashboard-service';
 
 @Component({
   selector: 'app-cards-list',
@@ -11,11 +11,22 @@ import { DashboardService } from '../../services/dashboard-service';
 })
 export class CardsList {
   private dashboardService = inject(DashboardService);
-  activeTabId = input.required<string>();
+  tabId = input.required<string>();
 
-  contentForActiveTab = computed(
-    () =>
-      this.dashboardService.dashboardMockData().tabs.find((tab) => tab.id === this.activeTabId())!
-        .cards,
-  );
+  contentForActiveTab = computed(() => {
+    const dashboardResource = this.dashboardService.dashboardResource;
+
+    if (!dashboardResource.hasValue()) {
+      return [];
+    }
+
+    const dashboard = dashboardResource.value();
+    const tab = dashboard.tabs.find((tab) => tab.id === this.tabId());
+
+    if (!tab) {
+      return [];
+    }
+
+    return tab.cards;
+  });
 }

@@ -1,0 +1,10 @@
+@let isUser = user();
+
+<h2>Not Found</h2>
+<h3>This page doesn’t exist</h3>
+
+@if (isUser) {
+  <a routerLink="/">Go to dashboards page</a>
+} @else {
+  <a routerLink="/login">Go to login page</a>
+}

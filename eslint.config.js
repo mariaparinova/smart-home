@@ -39,8 +39,11 @@ export default defineConfig([
       'unicorn/catch-error-name': 'off',
       'unicorn/consistent-function-scoping': 'off',
       'unicorn/no-useless-undefined': 'off',
+      'unicorn/no-null': 'off',
+      'unicorn/prefer-global-this': 'off',
+      'unicorn/no-array-for-each': 'off',
+      'unicorn/prefer-ternary': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
-      'unicorn/prefer-global-this': 'off'
     },
   },
   {
@@ -48,7 +51,6 @@ export default defineConfig([
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {
       '@angular-eslint/template/prefer-self-closing-tags': ['error'],
-      '@angular-eslint/template/interactive-supports-focus': 'off',
     },
   },
 ]);
