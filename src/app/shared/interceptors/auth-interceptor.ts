@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
@@ -14,21 +14,19 @@ export function authInterceptor(
     return next(request);
   }
 
+  let authRequest = request;
   if (token) {
-    const requestWithToken = request.clone({
+    authRequest = request.clone({
       headers: request.headers.set('Authorization', `Bearer ${token}`),
     });
-
-    return next(requestWithToken);
   }
 
-  return next(request).pipe(
-    tap({
-      error: (error: unknown) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
-          authService.logout();
-        }
-      },
+  return next(authRequest).pipe(
+    catchError((error: unknown) => {
+      if (error instanceof HttpErrorResponse && error.status === 401) {
+        authService.logout();
+      }
+      return throwError(() => error);
     }),
   );
 }

@@ -21,8 +21,8 @@ export class SingleCard implements OnInit {
     if (firstItem.type === 'sensor') {
       this.sensor.set(firstItem);
       return;
-    } else {
-      this.device.set(firstItem);
     }
+
+    this.device.set(firstItem);
   }
 }

@@ -39,10 +39,7 @@ export class LoginPage {
     password: ['consectetur', [Validators.required, Validators.minLength(2)]],
   });
 
-  getErrorMessage(
-    control: AbstractControl,
-    messages: Record<string, string>
-  ): string | null {
+  getErrorMessage(control: AbstractControl, messages: Record<string, string>): string | null {
     if (!control.errors) {
       return null;
     }

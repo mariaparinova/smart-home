@@ -14,6 +14,6 @@ import { Sensor } from '../../../../models/dashboard.models';
   },
 })
 export class MultiCardSensor {
-  multiCardSensorData = input.required<Sensor>();
+  multiCardSensor = input.required<Sensor>();
   isVerticalLayout = input.required<boolean>();
 }
