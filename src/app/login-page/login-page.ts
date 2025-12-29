@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -22,12 +22,12 @@ export class LoginPage {
   formErrorMessages = {
     userName: {
       required: 'This field is required',
-      minLength: 'Must contain at least 2 letters',
+      minlength: 'Must contain at least 2 letters',
       pattern: 'Allowed characters is A-Z a-z',
     },
     password: {
       required: 'This field is required',
-      minLength: 'Minimum length is 2 symbols',
+      minlength: 'Minimum length is 2 symbols',
     },
   };
 
@@ -38,6 +38,24 @@ export class LoginPage {
     ],
     password: ['consectetur', [Validators.required, Validators.minLength(2)]],
   });
+
+  getErrorMessage(
+    control: AbstractControl,
+    messages: Record<string, string>
+  ): string | null {
+    if (!control.errors) {
+      return null;
+    }
+
+    const errorKeys = Object.keys(control.errors);
+
+    for (const key of errorKeys) {
+      if (messages[key]) {
+        return messages[key];
+      }
+    }
+    return null;
+  }
 
   submitLoginForm = () => {
     if (this.loginForm.invalid) {

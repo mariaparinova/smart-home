@@ -8,23 +8,20 @@
   height: 100%;
 }
 
-.title {
-  padding: 20px 40px 0;
-  width: 340px;
-  text-align: center;
-  background-color: vars.$bg-color-secondary;
-  border-radius: vars.$border-radius-s vars.$border-radius-s 0 0;
-}
-
 .login-form {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 340px;
-  padding: 20px 40px;
+  min-height: 364px;
+  padding: 32px 40px;
   background-color: vars.$bg-color-secondary;
-  border-radius: 0 0 vars.$border-radius-s vars.$border-radius-s;
+  border-radius: vars.$border-radius-s;
+}
+
+.title {
+  text-align: center;
 }
 
 button {

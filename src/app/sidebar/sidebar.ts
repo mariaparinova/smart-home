@@ -28,7 +28,7 @@ export class Sidebar implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this?.mediaQuery) {
+    if (this.mediaQuery) {
       this.mediaQuery.removeEventListener('change', this.mediaQueryListener);
     }
   }

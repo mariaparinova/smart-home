@@ -1,15 +1,13 @@
 @let form = loginForm;
 @let formControlUserName = form.controls.userName;
 @let formControlPassword = form.controls.password;
-@let formSubmitErrorMessage = loginFormSubmitErrorMessage();
-
-<h4 class="title">Welcome home!</h4>
 
 <form
   class="login-form"
   [formGroup]="loginForm"
   (submit)="submitLoginForm()"
 >
+  <h4 class="title">Welcome home!</h4>
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input
@@ -17,16 +15,9 @@
       matInput
       formControlName="userName"
     />
-    @switch (true) {
-      @case (formControlUserName.hasError('required')) {
-        <mat-error> {{ formErrorMessages.userName.required }} </mat-error>
-      }
-      @case (formControlUserName.hasError('minlength')) {
-        <mat-error> {{ formErrorMessages.userName.minLength }} </mat-error>
-      }
-      @case (formControlUserName.hasError('pattern')) {
-        <mat-error> {{ formErrorMessages.userName.pattern }} </mat-error>
-      }
+
+    @if (getErrorMessage(formControlUserName, formErrorMessages.userName); as error) {
+      <mat-error>{{ error }}</mat-error>
     }
   </mat-form-field>
 
@@ -37,13 +28,9 @@
       matInput
       formControlName="password"
     />
-    @switch (true) {
-      @case (formControlPassword.hasError('required')) {
-        <mat-error> {{ formErrorMessages.password.required }} </mat-error>
-      }
-      @case (formControlPassword.hasError('minlength')) {
-        <mat-error> {{ formErrorMessages.password.minLength }} </mat-error>
-      }
+
+    @if (getErrorMessage(formControlPassword, formErrorMessages.userName); as error) {
+      <mat-error>{{ error }}</mat-error>
     }
   </mat-form-field>
 
@@ -53,5 +40,8 @@
   >
     log in
   </button>
-  <span class="error">{{ formSubmitErrorMessage }}</span>
+
+  @if (loginFormSubmitErrorMessage(); as submitError) {
+    <span class="error">{{ submitError }}</span>
+  }
 </form>
