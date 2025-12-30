@@ -11,8 +11,7 @@ import {
 import { LoginData, UserProfile } from '../models/user.models';
 import { Dashboard } from '../models/dashboard.models';
 import { SideBarItem } from '../models/sidebar.models';
-
-const BASE_URL = 'http://localhost:3004';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -28,22 +27,31 @@ export class SmartHomeApiService {
       password,
     };
 
-    return this.http.post<LoginResponseDto>(`${BASE_URL}/api/user/login`, body);
+    return this.http.post<LoginResponseDto>(
+      `${environment.smartHomeApiBaseUrl}/api/user/login`,
+      body,
+    );
   }
 
   getUser(): Observable<UserProfile> {
-    return this.http.get<UserProfileResponseDto>(`${BASE_URL}/api/user/profile`);
+    return this.http.get<UserProfileResponseDto>(
+      `${environment.smartHomeApiBaseUrl}/api/user/profile`,
+    );
   }
 
   getDashboards(): Observable<SideBarItem[]> {
-    return this.http.get<SideBarItemDto[]>(`${BASE_URL}/api/user/dashboards`);
+    return this.http.get<SideBarItemDto[]>(
+      `${environment.smartHomeApiBaseUrl}/api/user/dashboards`,
+    );
   }
 
   getDashboard(dashboardId: string): Observable<Dashboard> {
-    return this.http.get<DashboardDto>(`${BASE_URL}/api/dashboards/${dashboardId}`).pipe(
-      map((dashboardDto) => {
-        return { ...dashboardDto, id: dashboardId };
-      }),
-    );
+    return this.http
+      .get<DashboardDto>(`${environment.smartHomeApiBaseUrl}/api/dashboards/${dashboardId}`)
+      .pipe(
+        map((dashboardDto) => {
+          return { ...dashboardDto, id: dashboardId };
+        }),
+      );
   }
 }
