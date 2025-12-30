@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
-import { DashboardService } from '../shared/services/dashboard-service';
+import { DashboardService } from './services/dashboard-service';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 

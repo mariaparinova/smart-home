@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { SmartHomeApiService } from './smart-home-api.service';
+import { SmartHomeApiService } from '../../shared/services/smart-home-api.service';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({

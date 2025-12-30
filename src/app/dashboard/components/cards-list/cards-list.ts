@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { MultiCard } from '../../../shared/components/cards/multi-card/multi-card';
 import { SingleCard } from '../../../shared/components/cards/single-card/single-card';
-import { DashboardService } from '../../../shared/services/dashboard-service';
+import { DashboardService } from '../../services/dashboard-service';
 
 @Component({
   selector: 'app-cards-list',

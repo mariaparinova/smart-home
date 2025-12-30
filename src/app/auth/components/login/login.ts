@@ -3,16 +3,16 @@ import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'app-login',
   imports: [ReactiveFormsModule, MatFormField, MatLabel, MatError, MatInput, MatButton],
-  templateUrl: './login-page.html',
-  styleUrl: './login-page.scss',
+  templateUrl: './login.html',
+  styleUrl: './login.scss',
 })
-export class LoginPage {
+export class Login {
   protected formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);

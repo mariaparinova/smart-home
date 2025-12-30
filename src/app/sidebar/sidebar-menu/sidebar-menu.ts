@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { DashboardService } from '../../shared/services/dashboard-service';
+import { DashboardService } from '../../dashboard/services/dashboard-service';
 
 @Component({
   selector: 'app-sidebar-menu',

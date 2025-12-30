@@ -1,6 +1,6 @@
 import { CanActivateFn, RedirectCommand, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { DashboardService } from '../../shared/services/dashboard-service';
+import { DashboardService } from '../services/dashboard-service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { Dashboard } from '../../shared/models/dashboard.models';

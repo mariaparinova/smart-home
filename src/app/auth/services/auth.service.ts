@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
-import { UserProfile } from '../models/user.models';
-import { SmartHomeApiService } from './smart-home-api.service';
+import { UserProfile } from '../../shared/models/user.models';
+import { SmartHomeApiService } from '../../shared/services/smart-home-api.service';
 import { Router } from '@angular/router';
 
 const TOKEN_KEY = 'auth-token';

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { AuthService } from '../../shared/services/auth.service';
+import { AuthService } from '../../auth/services/auth.service';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 
