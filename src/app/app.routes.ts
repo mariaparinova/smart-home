@@ -9,6 +9,7 @@ import { authGuard } from './auth/guards/auth-guard';
 import { dashboardIndexGuard } from './dashboard/guards/dashboard-index-guard';
 import { dashboardExistenceGuard } from './dashboard/guards/dashboard-existence-guard';
 import { tabExistenceGuard } from './dashboard/guards/tab-existence-guard';
+import {guestGuard} from './auth/guards/guest-guard';
 
 export const routes: Routes = [
   {
@@ -24,7 +25,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./dashboard/dashboard-layout').then((module) => module.DashboardLayout),
     title: 'Dashboard - Smart Home',
-    canActivate: [authGuard(true)],
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -50,7 +51,7 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () => import('./auth/components/login/login').then((module) => module.Login),
     title: 'Login - Smart Home',
-    canActivate: [authGuard(false)],
+    canActivate: [guestGuard],
   },
   { path: '**', component: NotFound },
 ];
