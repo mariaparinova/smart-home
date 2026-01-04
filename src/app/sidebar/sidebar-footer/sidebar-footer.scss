@@ -4,14 +4,32 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 0 12px;
+  padding: 12px 0 0;
   font-size: 14px;
+  white-space: nowrap;
+  border-top: 1px solid vars.$border-color;
+}
+
+.add-dashboard,
+.log-out {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 4px;
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .user-details {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding-left: 8px;
 }
 
 .user-initials {

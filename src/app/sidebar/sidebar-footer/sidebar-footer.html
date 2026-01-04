@@ -1,17 +1,29 @@
 @let userProfile = user();
 
 @if (userProfile) {
+  <div class="add-dashboard">
+    <button
+      mat-icon-button
+      class="icon-button"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+    <span>Add Dashboard</span>
+  </div>
+  <div class="log-out">
+    <button
+      mat-icon-button
+      class="icon-button"
+      (click)="logout()"
+    >
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <span>Log out</span>
+  </div>
   <div class="user-details">
     <div class="user-initials">{{ userProfile.initials }}</div>
     <div class="user-full-name">{{ userProfile.fullName }}</div>
   </div>
-  <button
-    matButton="outlined"
-    (click)="logout()"
-  >
-    Log out
-    <mat-icon>exit_to_app</mat-icon>
-  </button>
 } @else {
   <img
     ngSrc="/rss-logo.svg"

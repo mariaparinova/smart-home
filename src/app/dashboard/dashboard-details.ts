@@ -42,14 +42,13 @@ export class DashboardDetails {
         return;
       }
 
-      const dashboard = this.dashboardResource.value();
       const tabId = this.activatedRouter.firstChild?.snapshot.params['tabId'];
 
       if (tabId) {
         return;
       }
 
-      const initTabId = dashboard?.tabs[0]?.id;
+      const initTabId = this.dashboardResource.value().tabs[0]?.id;
 
       if (initTabId) {
         this.router.navigate([initTabId], { relativeTo: this.activatedRouter });

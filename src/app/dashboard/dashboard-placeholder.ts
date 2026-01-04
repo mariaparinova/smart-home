@@ -16,7 +16,7 @@ export class DashboardPlaceholder {
     effect(() => {
       const dashboards = this.dashboardService.dashboards();
 
-      if (dashboards && dashboards.length > 0) {
+      if (dashboards?.length) {
         this.router.navigate([dashboards[0].id], {
           replaceUrl: true,
           relativeTo: this.activatedRouter,

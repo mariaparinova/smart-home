@@ -3,13 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import {
   DashboardDto,
+  DeviceDto,
   LoginRequestDto,
   LoginResponseDto,
+  SensorDto,
   SideBarItemDto,
   UserProfileResponseDto,
 } from './smart-home-api.models';
 import { LoginData, UserProfile } from '../models/user.models';
-import { Dashboard } from '../models/dashboard.models';
+import { Dashboard, Device, Sensor } from '../models/dashboard.models';
 import { SideBarItem } from '../models/sidebar.models';
 import { environment } from '../../../environments/environment';
 
@@ -53,5 +55,11 @@ export class SmartHomeApiService {
           return { ...dashboardDto, id: dashboardId };
         }),
       );
+  }
+
+  getDevices(): Observable<(Device | Sensor)[]> {
+    return this.http.get<(DeviceDto | SensorDto)[]>(
+      `${environment.smartHomeApiBaseUrl}/api/devices`,
+    );
   }
 }
