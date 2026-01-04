@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { SensorData } from '../../../../../dashboard/models/dashboard.models';
 import { SensorValuePipe } from '../../../../../pipes/sensor-value-pipe/sensor-value-pipe';
+import { Sensor } from '../../../../models/dashboard.models';
 
 @Component({
   selector: 'app-multi-card-sensor',
@@ -14,6 +14,6 @@ import { SensorValuePipe } from '../../../../../pipes/sensor-value-pipe/sensor-v
   },
 })
 export class MultiCardSensor {
-  multiCardSensorData = input.required<SensorData>();
+  multiCardSensor = input.required<Sensor>();
   isVerticalLayout = input.required<boolean>();
 }

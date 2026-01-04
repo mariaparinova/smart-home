@@ -1,4 +1,4 @@
-@let multiCard = multiCardData();
+@let card = multiCard();
 @let shouldRenderCommonToggle = displayCommonToggle();
 @let commonToggleOn = isCommonToggleOn();
 @let isVerticalContainerLayout = isVerticalCardLayout();
@@ -6,11 +6,11 @@
 @let currentTabId = tabId();
 
 <div class="card-header">
-  <h4>{{ multiCard.title }}</h4>
+  <h4>{{ card.title }}</h4>
   @if (shouldRenderCommonToggle) {
     <mat-slide-toggle
       [hideIcon]="true"
-      [aria-label]="multiCard.title"
+      [aria-label]="card.title"
       [checked]="commonToggleOn"
       (change)="setAllDevicesStateInCard($event)"
     />
@@ -21,20 +21,20 @@
   class="card-content"
   [class.vertical-layout]="isVerticalContainerLayout"
 >
-  @for (cardItem of multiCard.items; track cardItem.label) {
+  @for (cardItem of card.items; track cardItem.label) {
     @if (cardItem.type === 'device') {
       <app-multi-card-device
         [isVerticalLayout]="isVerticalItemsLayout"
-        [multiCardDeviceData]="cardItem"
+        [multiCardDevice]="cardItem"
         [tabId]="currentTabId"
-        [cardId]="multiCard.id"
+        [cardId]="card.id"
       />
     }
 
     @if (cardItem.type === 'sensor') {
       <app-multi-card-sensor
         [isVerticalLayout]="isVerticalItemsLayout"
-        [multiCardSensorData]="cardItem"
+        [multiCardSensor]="cardItem"
       />
     }
   }

@@ -1,0 +1,47 @@
+@let form = loginForm;
+@let formControlUserName = form.controls.userName;
+@let formControlPassword = form.controls.password;
+
+<form
+  class="login-form"
+  [formGroup]="loginForm"
+  (submit)="submitLoginForm()"
+>
+  <h4 class="title">Welcome home!</h4>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input
+      type="text"
+      matInput
+      formControlName="userName"
+    />
+
+    @if (getErrorMessage(formControlUserName, formErrorMessages.userName); as error) {
+      <mat-error>{{ error }}</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input
+      type="password"
+      matInput
+      formControlName="password"
+    />
+
+    @if (getErrorMessage(formControlPassword, formErrorMessages.userName); as error) {
+      <mat-error>{{ error }}</mat-error>
+    }
+  </mat-form-field>
+
+  <button
+    matButton="filled"
+    type="submit"
+  >
+    log in
+  </button>
+
+  @if (loginFormSubmitErrorMessage(); as submitError) {
+    <span class="error">{{ submitError }}</span>
+  }
+</form>

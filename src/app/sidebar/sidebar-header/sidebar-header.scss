@@ -13,7 +13,7 @@
   white-space: nowrap;
 }
 
-.icon-menu {
+.icon-button {
   display: none;
   flex-shrink: 0;
   cursor: pointer;
@@ -24,7 +24,7 @@
     padding: 0;
   }
 
-  .icon-menu {
+  .icon-button {
     display: block;
   }
 }

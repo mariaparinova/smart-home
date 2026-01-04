@@ -1,0 +1,9 @@
+@let userAuthenticated = isUserAuthenticated();
+
+@if (userAuthenticated) {
+  <app-sidebar />
+}
+
+<section class="page-content">
+  <router-outlet />
+</section>

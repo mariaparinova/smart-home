@@ -1,16 +1,20 @@
 @let cards = contentForActiveTab();
-@let tabId = activeTabId();
+@let activeTabId = tabId();
 
 @for (card of cards; track card.id) {
   @if (card.layout === 'singleDevice') {
     <app-single-card
-      [singleCardData]="card"
-      [tabId]="tabId"
+      [singleCard]="card"
+      [tabId]="activeTabId"
     />
   } @else {
     <app-multi-card
-      [multiCardData]="card"
-      [tabId]="tabId"
+      [multiCard]="card"
+      [tabId]="activeTabId"
     />
   }
+}
+
+@if (!cards.length) {
+  <p class="empty-dashboard">No cards found</p>
 }

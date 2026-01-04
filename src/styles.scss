@@ -4,17 +4,34 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use './_theme-colors' as custom-theme;
 @use './vars' as vars;
 
+$custom-dark-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: custom-theme.$primary-palette,
+      tertiary: custom-theme.$tertiary-palette,
+    ),
+    typography: (
+      brand-family: 'Roboto',
+      plain-family: 'Roboto',
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
 html {
+  @include mat.all-component-themes($custom-dark-theme);
+
   color-scheme: dark;
-  @include mat.theme(
-    (
-      color: mat.$cyan-palette,
-      typography: Roboto,
-      density: 0,
-    )
-  );
+
+  @media (forced-colors: active) {
+    @include custom-theme.high-contrast-overrides(dark);
+  }
 
   @include mat.slide-toggle-overrides(
     (
@@ -29,14 +46,7 @@ html {
     )
   );
 
-  @include mat.tabs-overrides(
-    (
-      divider-height: 2px,
-      active-focus-indicator-color: vars.$font-color-primary,
-      active-hover-indicator-color: vars.$font-color-primary,
-      active-indicator-color: vars.$font-color-primary,
-    )
-  );
+  font-family: vars.$font-family-Roboto;
 }
 
 * {
@@ -46,11 +56,6 @@ html {
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: dark;
-
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
   // variables at https://material.angular.dev/guide/system-variables
@@ -59,13 +64,34 @@ body {
   background-color: vars.$bg-color-primary;
 }
 
+.empty-dashboard {
+  margin-top: 60px;
+  text-align: center;
+  line-height: 1.5;
+  color: vars.$font-color-secondary;
+}
+
 a {
   color: inherit;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: 500;
 }
 
 h4 {
   font-size: 20px;
   font-weight: 400;
+}
+
+.spinner {
+  margin: 20% auto;
 }
 
 .dashboard-icon {
@@ -74,6 +100,10 @@ h4 {
 
 .dashboard-icon.active {
   color: vars.$card-icon-color-active;
+}
+
+.sensor-icon {
+  color: vars.$icon-color-non-switchable;
 }
 
 .vertical-layout {

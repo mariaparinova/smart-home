@@ -1,15 +1,16 @@
-@let sensor = sensorData();
-@let device = deviceData();
+@let sensorData = sensor();
+@let deviceData = device();
 @let currentTabId = tabId();
-@let singleCardId = singleCardData();
+@let card = singleCard();
 
-@if (sensor) {
-  <app-single-card-sensor [singleCardSensorData]="sensor" />
+@if (sensorData) {
+  <app-single-card-sensor [singleCardSensor]="sensorData" />
 }
 
-@if (device) {
+@if (deviceData) {
   <app-single-card-device
     [tabId]="currentTabId"
-    [cardId]="singleCardId.id"
+    [cardId]="card.id"
+    [singleCardDevice]="deviceData"
   />
 }

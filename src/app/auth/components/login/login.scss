@@ -1,0 +1,34 @@
+@use '../../../../vars';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.login-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 340px;
+  min-height: 364px;
+  padding: 32px 40px;
+  background-color: vars.$bg-color-secondary;
+  border-radius: vars.$border-radius-s;
+}
+
+.title {
+  text-align: center;
+}
+
+button {
+  text-transform: uppercase;
+}
+
+.error {
+  text-align: center;
+  color: vars.$font-color-warning;
+}

@@ -2,12 +2,12 @@
 @let handleSidebarToggle = toggleSidebar();
 
 <button
+  class="icon-button"
   mat-icon-button
   aria-label="Toggle sidebar"
   (click)="handleSidebarToggle()"
 >
   <mat-icon
-    class="icon-menu"
     [fontIcon]="isSidebarExpanded ? 'menu_closed' : 'menu_open'"
     aria-label="Sidebar menu icon"
   />

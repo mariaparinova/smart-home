@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { DashboardService } from '../../dashboard/services/dashboard-service';
 
 @Component({
   selector: 'app-sidebar-menu',
@@ -9,8 +10,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './sidebar-menu.scss',
 })
 export class SidebarMenu {
-  menuItems = [
-    { id: 'overview', title: 'Overview', iconName: 'dashboard', linkTo: '/dashboard' },
-    { id: 'about', title: 'About', iconName: 'info', linkTo: '/about' },
-  ];
+  private dashboardService = inject(DashboardService);
+  dashboards = this.dashboardService.dashboards;
 }

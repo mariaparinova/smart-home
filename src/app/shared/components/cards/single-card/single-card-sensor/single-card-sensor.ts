@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { SensorValuePipe } from '../../../../../pipes/sensor-value-pipe/sensor-value-pipe';
-import { SensorData } from '../../../../../dashboard/models/dashboard.models';
+import { Sensor } from '../../../../models/dashboard.models';
 
 @Component({
   selector: 'app-single-card-sensor',
@@ -13,5 +13,5 @@ import { SensorData } from '../../../../../dashboard/models/dashboard.models';
   },
 })
 export class SingleCardSensor {
-  singleCardSensorData = input.required<SensorData>();
+  singleCardSensor = input.required<Sensor>();
 }

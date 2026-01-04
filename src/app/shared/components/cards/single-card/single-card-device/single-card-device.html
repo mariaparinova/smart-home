@@ -1,8 +1,8 @@
-@let deviceData = singleCardDeviceData();
+@let device = singleCardDevice();
 
 <div class="content">
-  <span class="label">{{ deviceData.label }}</span>
-  <h4>{{ deviceData.state ? 'ON' : 'OFF' }}</h4>
+  <span class="label">{{ device.label }}</span>
+  <h4>{{ device.state ? 'ON' : 'OFF' }}</h4>
 </div>
 
 <button
@@ -12,8 +12,8 @@
 >
   <mat-icon
     class="dashboard-icon"
-    [fontIcon]="deviceData.icon"
+    [fontIcon]="device.icon"
     appHighlightActiveDevice
-    [isActive]="deviceData.state"
+    [isActive]="device.state"
   />
 </button>
