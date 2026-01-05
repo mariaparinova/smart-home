@@ -1,15 +1,17 @@
-@if (dashboardResource.status() === 'loading') {
+@let dashboard = activeDashboard();
+
+@if (dashboard.status() === 'loading') {
   <mat-progress-spinner
     class="spinner"
     mode="indeterminate"
     aria-label="Loading"
   />
-} @else if (dashboardResource.status() === 'error') {
+} @else if (dashboard.status() === 'error') {
   <p>Dashboard not found</p>
-} @else if (dashboardResource.status() === 'resolved' && dashboardResource.hasValue()) {
-  @let tabList = dashboardResource.value().tabs;
+} @else if (dashboard.status() === 'resolved' && dashboard.value()) {
+  @let tabList = dashboard.value()?.tabs;
 
-  @if (tabList.length) {
+  @if (tabList?.length) {
     <nav
       mat-tab-nav-bar
       [tabPanel]="dashboardTabPanel"

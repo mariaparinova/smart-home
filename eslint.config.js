@@ -5,6 +5,7 @@ import tseslint from 'typescript-eslint';
 import angular from 'angular-eslint';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import prettierConfig from 'eslint-config-prettier';
+import ngrx from '@ngrx/eslint-plugin/v9';
 
 export default defineConfig([
   {
@@ -14,9 +15,16 @@ export default defineConfig([
       tseslint.configs.recommended,
       tseslint.configs.stylistic,
       angular.configs.tsRecommended,
+      ngrx.configs.signals,
+      ngrx.configs.signalsTypeChecked,
       eslintPluginUnicorn.configs.recommended,
       prettierConfig,
     ],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+      },
+    },
     processor: angular.processInlineTemplates,
     rules: {
       '@angular-eslint/directive-selector': [

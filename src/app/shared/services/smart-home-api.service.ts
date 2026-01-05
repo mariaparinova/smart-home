@@ -11,8 +11,7 @@ import {
   UserProfileResponseDto,
 } from './smart-home-api.models';
 import { LoginData, UserProfile } from '../models/user.models';
-import { Dashboard, Device, Sensor } from '../models/dashboard.models';
-import { SideBarItem } from '../models/sidebar.models';
+import { Dashboard, Device, Sensor, SideBarItem } from '../models/dashboard.models';
 import { environment } from '../../../environments/environment';
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { MultiCard } from '../../../shared/components/cards/multi-card/multi-card';
 import { SingleCard } from '../../../shared/components/cards/single-card/single-card';
-import { DashboardService } from '../../services/dashboard-service';
+import { DashboardStore } from '../../dashboard-store/dashboard-store';
 
 @Component({
   selector: 'app-cards-list',
@@ -10,18 +10,17 @@ import { DashboardService } from '../../services/dashboard-service';
   styleUrl: './cards-list.scss',
 })
 export class CardsList {
-  private dashboardService = inject(DashboardService);
+  private dashboardStore = inject(DashboardStore);
   tabId = input.required<string>();
 
   contentForActiveTab = computed(() => {
-    const dashboardResource = this.dashboardService.dashboardResource;
+    const activeDashboard = this.dashboardStore.activeDashboard().value();
 
-    if (!dashboardResource.hasValue()) {
+    if (!activeDashboard) {
       return [];
     }
 
-    const dashboard = dashboardResource.value();
-    const tab = dashboard.tabs.find((tab) => tab.id === this.tabId());
+    const tab = activeDashboard.tabs.find((tab) => tab.id === this.tabId());
 
     if (!tab) {
       return [];

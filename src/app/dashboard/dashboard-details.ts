@@ -1,6 +1,5 @@
 import { Component, effect, inject, input } from '@angular/core';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
-import { DashboardService } from './services/dashboard-service';
 import {
   ActivatedRoute,
   Router,
@@ -9,6 +8,7 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { DashboardStore } from './dashboard-store/dashboard-store';
 
 @Component({
   selector: 'app-dashboard-details',
@@ -25,20 +25,22 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   styleUrl: './dashboard-details.scss',
 })
 export class DashboardDetails {
-  private dashboardService = inject(DashboardService);
+  private dashboardStore = inject(DashboardStore);
   private router = inject(Router);
   private activatedRouter = inject(ActivatedRoute);
 
   dashboardId = input.required<string>();
-  dashboardResource = this.dashboardService.dashboardResource;
+  activeDashboard = this.dashboardStore.activeDashboard;
 
   constructor() {
     effect(() => {
-      this.dashboardService.dashboardId.set(this.dashboardId());
+      this.dashboardStore.updateActiveDashboardId(this.dashboardId());
     });
 
     effect(() => {
-      if (!this.dashboardResource.hasValue()) {
+      const activeDashboardValue = this.activeDashboard().value();
+
+      if (!activeDashboardValue) {
         return;
       }
 
@@ -48,7 +50,7 @@ export class DashboardDetails {
         return;
       }
 
-      const initTabId = this.dashboardResource.value().tabs[0]?.id;
+      const initTabId = activeDashboardValue.tabs[0]?.id;
 
       if (initTabId) {
         this.router.navigate([initTabId], { relativeTo: this.activatedRouter });

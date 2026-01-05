@@ -1,3 +1,9 @@
+export interface SideBarItem {
+  id: string;
+  title: string;
+  icon: string;
+}
+
 export interface Dashboard {
   id: string;
   tabs: Tab[];

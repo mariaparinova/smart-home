@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Sidebar } from '../sidebar/sidebar';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
+import { DashboardStore } from '../dashboard/dashboard-store/dashboard-store';
 
 @Component({
   selector: 'app-view',
@@ -10,6 +11,11 @@ import { AuthService } from '../auth/services/auth.service';
   styleUrl: './app-view.scss',
 })
 export class AppView {
-  authService = inject(AuthService);
+  private dashboardStore = inject(DashboardStore);
+  private authService = inject(AuthService);
   isUserAuthenticated = this.authService.isAuthenticated;
+
+  constructor() {
+    this.dashboardStore.loadDashboards();
+  }
 }
