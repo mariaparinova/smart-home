@@ -39,6 +39,7 @@ export interface DeviceDto {
   icon: string;
   label: string;
   state: boolean;
+  id?: string;
 }
 
 export interface SensorDto {

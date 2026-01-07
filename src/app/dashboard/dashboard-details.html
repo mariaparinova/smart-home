@@ -1,4 +1,5 @@
 @let dashboard = activeDashboard();
+@let isEditMode = editModeEnabled();
 
 @if (dashboard.status() === 'loading') {
   <mat-progress-spinner
@@ -9,29 +10,82 @@
 } @else if (dashboard.status() === 'error') {
   <p>Dashboard not found</p>
 } @else if (dashboard.status() === 'resolved' && dashboard.value()) {
-  @let tabList = dashboard.value()?.tabs;
+  @let tabList = dashboard.value()?.tabs || [];
 
-  @if (tabList?.length) {
-    <nav
-      mat-tab-nav-bar
-      [tabPanel]="dashboardTabPanel"
-      [animationDuration]="0"
-      mat-stretch-tabs="false"
-      class="dashboard-tabs"
-    >
-      @for (tab of tabList; track $index) {
-        <a
-          mat-tab-link
-          [routerLink]="['.', tab.id]"
-          routerLinkActive
-          #rla="routerLinkActive"
-          [active]="rla.isActive"
-        >
-          {{ tab.title }}
-        </a>
+  <div
+    class="dashboard-bar"
+    [class.edit-mode]="isEditMode"
+  >
+    <div class="actions">
+      @if (isEditMode) {
+        <div class="edit-mode-actions">
+          <button
+            matButton="outlined"
+            (click)="exitEditMode()"
+          >
+            ADD CARD
+          </button>
+          <button matButton="outlined">DISCARD</button>
+          <button matButton="outlined">SAVE</button>
+        </div>
+      } @else {
+        <div class="view-mode-actions">
+          <button
+            mat-icon-button
+            (click)="enterEditMode()"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deleteDashboard()"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       }
-    </nav>
-  }
+    </div>
+    <div class="tabs-container">
+      <nav
+        mat-tab-nav-bar
+        [tabPanel]="dashboardTabPanel"
+      >
+        @for (tab of tabList; track tab.id) {
+          <div
+            class="tab-item"
+            [class.active]="rla.isActive"
+            routerLinkActive
+            #rla="routerLinkActive"
+          >
+            @let isTabInEditMode = isEditMode && rla.isActive;
+
+            @if (isTabInEditMode) {
+              <button mat-icon-button>
+                <mat-icon>arrow_left</mat-icon>
+              </button>
+            }
+
+            <a
+              mat-tab-link
+              [routerLink]="['.', tab.id]"
+              [active]="rla.isActive"
+            >
+              {{ tab.title }}
+            </a>
+
+            @if (isTabInEditMode) {
+              <button mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>arrow_right</mat-icon>
+              </button>
+            }
+          </div>
+        }
+      </nav>
+    </div>
+  </div>
 
   <mat-tab-nav-panel #dashboardTabPanel>
     <router-outlet />

@@ -11,17 +11,21 @@ interface DashboardState {
   dashboards: SideBarItem[];
   isDashboardsLoading: boolean;
   activeDashboardId: string | undefined;
+  editModeEnabled: boolean;
 }
 
 const initialState: DashboardState = {
   dashboards: [],
   isDashboardsLoading: false,
   activeDashboardId: undefined,
+  editModeEnabled: false,
 };
 
 export const DashboardStore = signalStore(
   { providedIn: 'root' },
+
   withState(initialState),
+
   withMethods((store, smartHomeApiService = inject(SmartHomeApiService)) => ({
     loadDashboards: rxMethod<void>(
       pipe(
@@ -43,10 +47,24 @@ export const DashboardStore = signalStore(
         }),
       ),
     ),
+
     updateActiveDashboardId: (dashboardId: string | undefined) => {
       patchState(store, { activeDashboardId: dashboardId });
     },
+
+    enterEditMode: () => {
+      patchState(store, { editModeEnabled: true });
+    },
+
+    exitEditMode: () => {
+      patchState(store, { editModeEnabled: false });
+    },
+
+    deleteDashboard: () => {
+      return;
+    },
   })),
+
   withComputed((store, smartHomeApiService = inject(SmartHomeApiService)) => {
     const activeDashboardResource = rxResource({
       params: () => {

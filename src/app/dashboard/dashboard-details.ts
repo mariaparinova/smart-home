@@ -9,6 +9,8 @@ import {
 } from '@angular/router';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { DashboardStore } from './dashboard-store/dashboard-store';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton, MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-dashboard-details',
@@ -20,6 +22,9 @@ import { DashboardStore } from './dashboard-store/dashboard-store';
     MatTabNavPanel,
     RouterLinkActive,
     MatProgressSpinner,
+    MatIcon,
+    MatIconButton,
+    MatButton,
   ],
   templateUrl: './dashboard-details.html',
   styleUrl: './dashboard-details.scss',
@@ -31,6 +36,10 @@ export class DashboardDetails {
 
   dashboardId = input.required<string>();
   activeDashboard = this.dashboardStore.activeDashboard;
+  enterEditMode = this.dashboardStore.enterEditMode;
+  exitEditMode = this.dashboardStore.exitEditMode;
+  editModeEnabled = this.dashboardStore.editModeEnabled;
+  deleteDashboard = this.dashboardStore.deleteDashboard;
 
   constructor() {
     effect(() => {

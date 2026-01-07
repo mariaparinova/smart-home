@@ -61,4 +61,44 @@ export class SmartHomeApiService {
       `${environment.smartHomeApiBaseUrl}/api/devices`,
     );
   }
+
+  updateDeviceInSingleCard({
+    deviceId,
+    deviceState,
+  }: {
+    deviceId: string;
+    deviceState: boolean;
+  }): Observable<Device> {
+    const body = { state: deviceState };
+    return this.http.patch<DeviceDto>(
+      `${environment.smartHomeApiBaseUrl}/api/devices/${deviceId}`,
+      body,
+    );
+  }
+
+  createDashboard(dashboard: SideBarItem): Observable<SideBarItem> {
+    return this.http.post<SideBarItemDto>(
+      `${environment.smartHomeApiBaseUrl}/api/dashboards`,
+      dashboard,
+    );
+  }
+
+  updateDashboard(dashboard: Dashboard): Observable<Dashboard> {
+    const body = {
+      tabs: dashboard.tabs,
+    };
+    return this.http
+      .put<DashboardDto>(`${environment.smartHomeApiBaseUrl}/api/dashboards/${dashboard.id}`, body)
+      .pipe(
+        map((dashboardDto) => {
+          return { ...dashboardDto, id: dashboard.id };
+        }),
+      );
+  }
+
+  deleteDashboard(dashboardId: string): Observable<void> {
+    return this.http.delete<void>(
+      `${environment.smartHomeApiBaseUrl}/api/dashboards/${dashboardId}`,
+    );
+  }
 }
