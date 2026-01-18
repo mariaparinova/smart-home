@@ -5,6 +5,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { DashboardForm } from '../../dashboard/components/dashboard-form/dashboard-form';
+import { DashboardStore } from '../../dashboard/dashboard-store/dashboard-store';
 
 @Component({
   selector: 'app-sidebar-footer',
@@ -15,6 +16,7 @@ import { DashboardForm } from '../../dashboard/components/dashboard-form/dashboa
 export class SidebarFooter {
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
+  dashboardStore = inject(DashboardStore);
   user = this.authService.user;
 
   openCreateDashboardDialog() {

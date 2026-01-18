@@ -33,13 +33,18 @@ export const routes: Routes = [
       {
         path: ':dashboardId',
         component: DashboardDetails,
-        canDeactivate: [() => {
-          if (inject(DashboardStore).editModeEnabled()) {
+        canDeactivate: [
+          () => {
+            const dashboardStore = inject(DashboardStore);
+
+            if (!dashboardStore.editModeEnabled()) {
+              return true;
+            }
+
             alert('You have unsaved changes. Please save them before leaving the page');
             return false;
-          }
-          return true;
-        }],
+          },
+        ],
         children: [
           {
             path: ':tabId',

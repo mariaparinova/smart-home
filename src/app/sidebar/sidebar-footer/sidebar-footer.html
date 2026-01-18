@@ -1,10 +1,12 @@
 @let userProfile = user();
+@let isEditMode = dashboardStore.editModeEnabled();
 
 @if (userProfile) {
   <div class="add-dashboard">
     <button
       mat-icon-button
       class="icon-button"
+      [disabled]="isEditMode"
       (click)="openCreateDashboardDialog()"
     >
       <mat-icon>add</mat-icon>
