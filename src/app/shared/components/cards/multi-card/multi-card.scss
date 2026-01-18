@@ -3,11 +3,16 @@
 :host {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   padding: 16px 8px;
   background-color: vars.$bg-color-secondary;
   border: 1px solid vars.$border-color;
-  border-radius: vars.$border-radius-m;
+  border-radius: vars.$border-radius-s;
+}
+
+.title {
+  color: vars.$font-color-secondary;
+  text-transform: capitalize;
 }
 
 .card-header {

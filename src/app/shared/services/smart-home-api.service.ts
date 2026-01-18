@@ -87,6 +87,7 @@ export class SmartHomeApiService {
     const body = {
       tabs: dashboard.tabs,
     };
+
     return this.http
       .put<DashboardDto>(`${environment.smartHomeApiBaseUrl}/api/dashboards/${dashboard.id}`, body)
       .pipe(

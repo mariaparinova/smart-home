@@ -1,16 +1,22 @@
 @let sensorData = sensor();
 @let deviceData = device();
-@let currentTabId = tabId();
 @let card = singleCard();
+@let editModeEnabled = dashboardStore.editModeEnabled;
+
+<h4 class="card-title">{{ card?.title || '' }}</h4>
 
 @if (sensorData) {
   <app-single-card-sensor [singleCardSensor]="sensorData" />
 }
 
 @if (deviceData) {
-  <app-single-card-device
-    [tabId]="currentTabId"
-    [cardId]="card.id"
-    [singleCardDevice]="deviceData"
-  />
+  <app-single-card-device [singleCardDevice]="deviceData" />
+}
+
+@if (!sensorData && !deviceData) {
+  <p class="empty-card-message">{{ EMPTY_CARD_MESSAGE }}</p>
+}
+
+@if (editModeEnabled()) {
+  <app-card-actions [cardId]="card.id" />
 }

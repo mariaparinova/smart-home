@@ -1,8 +1,9 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HighlightActiveDevice } from '../../../../../directives/highlight-active-device/highlight-active-device';
 import { Device } from '../../../../models/dashboard.models';
+import { DashboardStore } from '../../../../../dashboard/dashboard-store/dashboard-store';
 
 @Component({
   selector: 'app-multi-card-device',
@@ -15,11 +16,13 @@ import { Device } from '../../../../models/dashboard.models';
   },
 })
 export class MultiCardDevice {
+  dashboardStore = inject(DashboardStore);
+
   multiCardDevice = input.required<Device>();
-  tabId = input.required<string>();
   cardId = input.required<string>();
   isVerticalLayout = input.required<boolean>();
 
-  handleChangeDeviceState = (params: MatSlideToggleChange) =>
-    (this.multiCardDevice().state = params.checked);
+  handleChangeDeviceState = () => {
+    // todo: implement
+  };
 }

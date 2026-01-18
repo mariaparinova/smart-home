@@ -1,10 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { VALIDATION_MESSAGES } from '../../../shared/constants/validation-messages';
+import { getErrorMessage } from '../../../shared/utils/form.utils';
+
+const USERNAME_MIN_LENGTH = 2;
+const PASSWORD_MIN_LENGTH = 2;
 
 @Component({
   selector: 'app-login',
@@ -13,48 +18,41 @@ import { Router } from '@angular/router';
   styleUrl: './login.scss',
 })
 export class Login {
-  protected formBuilder = inject(FormBuilder);
+  private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  loginFormSubmitErrorMessage = signal<string | null>(null);
+  submitErrorMessage = signal<string | null>(null);
 
   formErrorMessages = {
     userName: {
-      required: 'This field is required',
-      minlength: 'Must contain at least 2 letters',
-      pattern: 'Allowed characters is A-Z a-z',
+      required: VALIDATION_MESSAGES.required,
+      minlength: VALIDATION_MESSAGES.getMinLengthErrorMessage(USERNAME_MIN_LENGTH),
+      pattern: VALIDATION_MESSAGES.mustHasLetterOnly,
     },
     password: {
-      required: 'This field is required',
-      minlength: 'Minimum length is 2 symbols',
+      required: VALIDATION_MESSAGES.required,
+      minlength: VALIDATION_MESSAGES.getMinLengthErrorMessage(PASSWORD_MIN_LENGTH),
     },
   };
 
   loginForm = this.formBuilder.nonNullable.group({
     userName: [
       'Sparks',
-      [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-Z]{2,}$/)],
+      [
+        Validators.required,
+        Validators.minLength(USERNAME_MIN_LENGTH),
+        Validators.pattern(/^[a-zA-Z]{2,}$/),
+      ],
     ],
-    password: ['consectetur', [Validators.required, Validators.minLength(2)]],
+    password: ['consectetur', [Validators.required, Validators.minLength(PASSWORD_MIN_LENGTH)]],
   });
 
-  getErrorMessage(control: AbstractControl, messages: Record<string, string>): string | null {
-    if (!control.errors) {
-      return null;
-    }
+  getErrorMessage = getErrorMessage;
 
-    const errorKeys = Object.keys(control.errors);
+  submitForm = (event: SubmitEvent) => {
+    event.preventDefault();
 
-    for (const key of errorKeys) {
-      if (messages[key]) {
-        return messages[key];
-      }
-    }
-    return null;
-  }
-
-  submitLoginForm = () => {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -65,12 +63,13 @@ export class Login {
     this.authService.login({ userName, password }).subscribe({
       next: () => {
         this.router.navigate(['/dashboard']);
+        this.submitErrorMessage.set(null);
       },
       error: (response: HttpErrorResponse) => {
         if (response.status === 401) {
-          this.loginFormSubmitErrorMessage.set('Invalid login or password');
+          this.submitErrorMessage.set('Invalid login or password');
         } else {
-          this.loginFormSubmitErrorMessage.set('Unknown error occurred. Please try again later');
+          this.submitErrorMessage.set('Unknown error occurred. Please try again later');
         }
       },
     });

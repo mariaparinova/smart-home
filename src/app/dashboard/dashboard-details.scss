@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @use '../../vars';
 
 .dashboard-bar {
@@ -27,6 +28,14 @@
 }
 
 .tabs-container {
+  @include mat.icon-button-overrides(
+    (
+      icon-color: vars.$icon-color-active,
+    )
+  );
+
+  display: flex;
+  gap: 4px;
   flex-grow: 1;
 }
 
@@ -35,24 +44,20 @@
   align-items: center;
   gap: 2px;
   transition: width 0.2s;
-
-  &.active {
-    position: relative;
-
-    &::after {
-      content: '';
-      position: absolute;
-      z-index: 2;
-      bottom: 0;
-      height: 2px;
-      width: 100%;
-      background-color: vars.$border-color-active;
-    }
-  }
 }
 
-.tab-item.active button {
-  color: vars.$icon-color-active;
+.tab-item.active {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: vars.$border-color-active;
+  }
 }
 
 .view-mode-actions,
@@ -63,6 +68,15 @@
   width: fit-content;
   flex-grow: 0;
   flex-shrink: 0;
+}
+
+.tab-title {
+  text-transform: capitalize;
+}
+
+.not-found-message {
+  color: vars.$font-color-secondary;
+  text-align: center;
 }
 
 @media screen and (max-width: 767px) {

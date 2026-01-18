@@ -1,3 +1,9 @@
+export enum CardType {
+  Horizontal = 'horizontalLayout',
+  Vertical = 'verticalLayout',
+  SingleDevice = 'singleDevice',
+}
+
 export interface SideBarItem {
   id: string;
   title: string;
@@ -15,11 +21,11 @@ export interface Tab {
   cards: Card[];
 }
 
-export interface Card {
+export interface Card<Item = Sensor | Device> {
   id: string;
   title: string;
-  layout: 'horizontalLayout' | 'verticalLayout' | 'singleDevice';
-  items: (Sensor | Device)[];
+  layout: CardType;
+  items: Item[];
 }
 
 export interface Device {
@@ -27,7 +33,7 @@ export interface Device {
   icon: string;
   label: string;
   state: boolean;
-  id?: string;
+  id: string;
 }
 
 export interface Sensor {
@@ -38,4 +44,10 @@ export interface Sensor {
     amount: number;
     unit: string;
   };
+  id: string;
+}
+
+export enum Direction {
+  Left = 'left',
+  Right = 'right',
 }

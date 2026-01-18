@@ -1,0 +1,70 @@
+@let selectedLayout = selectedCardLayout();
+
+<span mat-dialog-title>Select a card layout</span>
+
+<mat-dialog-content>
+  <div class="cards-container">
+    @for (card of cardsExample; track card.id) {
+      <button
+        class="buttonify-container"
+        (click)="selectLayout(card.layout)"
+      >
+        <div
+          class="card-example"
+          [class.selected]="selectedLayout === card.layout"
+        >
+          <span class="title">{{ card.title }}</span>
+          <div
+            class="card"
+            [class.vertical]="card.layout === Layout.Vertical"
+            [class.horizontal]="card.layout === Layout.Horizontal"
+            [class.single-card]="card.layout === Layout.SingleDevice"
+          >
+            @for (cardItem of card.items; track cardItem.id) {
+              @if (card.layout === Layout.SingleDevice) {
+                <div class="item">
+                  <div class="labels-container">
+                    <span class="title">{{ cardItem.label }}</span>
+                    <span>{{ cardItem.value.amount }} {{ cardItem.value.unit }}</span>
+                  </div>
+                  <mat-icon
+                    class="sensor-icon"
+                    fontIcon="{{ cardItem.icon }}"
+                  />
+                </div>
+              } @else {
+                <div class="item">
+                  <span class="title">{{ cardItem.label }}</span>
+                  <mat-icon
+                    class="sensor-icon"
+                    fontIcon="{{ cardItem.icon }}"
+                  />
+                  <span>{{ cardItem.value.unit }}</span>
+                </div>
+              }
+            }
+          </div>
+          <p class="info">* {{ getCardInfo(card.layout) }}</p>
+        </div>
+      </button>
+    }
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button
+    mat-button
+    matButton="outlined"
+    mat-dialog-close
+  >
+    Cancel
+  </button>
+  <button
+    mat-button
+    matButton="outlined"
+    (click)="addCardToActiveDashboard()"
+    [disabled]="!selectedLayout"
+  >
+    Add card
+  </button>
+</mat-dialog-actions>

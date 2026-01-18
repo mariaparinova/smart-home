@@ -1,0 +1,32 @@
+@use '@angular/material' as mat;
+@use '../../../../../../vars';
+
+:host {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-top: 8px;
+  border-top: 1px solid vars.$border-color;
+}
+
+.order-controls-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-grow: 1;
+  gap: 2px;
+}
+
+.order-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 4px 16px;
+  min-width: 16px;
+  color: vars.$font-color-secondary;
+  font-size: 12px;
+  border: 1px solid vars.$border-color;
+  border-radius: vars.$border-radius-s;
+  transition: border-color 0.2s;
+}

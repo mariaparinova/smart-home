@@ -1,28 +1,38 @@
-import { Component, input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { SingleCardSensor } from './single-card-sensor/single-card-sensor';
 import { SingleCardDevice } from './single-card-device/single-card-device';
-import { Card, Device, Sensor } from '../../../models/dashboard.models';
+import { Card } from '../../../models/dashboard.models';
+import { CardActions } from '../components/card-actions/card-actions';
+import { DashboardStore } from '../../../../dashboard/dashboard-store/dashboard-store';
+import { EMPTY_CARD_MESSAGE } from '../messages';
 
 @Component({
   selector: 'app-single-card',
-  imports: [SingleCardSensor, SingleCardDevice],
+  imports: [SingleCardSensor, SingleCardDevice, CardActions],
   templateUrl: './single-card.html',
   styleUrl: './single-card.scss',
+  host: {
+    '[class.disabled]': 'dashboardStore.editModeEnabled()',
+  },
 })
-export class SingleCard implements OnInit {
-  tabId = input.required<string>();
+export class SingleCard {
+  protected readonly EMPTY_CARD_MESSAGE = EMPTY_CARD_MESSAGE;
+
+  dashboardStore = inject(DashboardStore);
+
   singleCard = input.required<Card>();
-  sensor = signal<Sensor | undefined>(undefined);
-  device = signal<Device | undefined>(undefined);
 
-  ngOnInit() {
+  sensor = computed(() => {
     const firstItem = this.singleCard().items[0];
+    return firstItem?.type === 'sensor' ? firstItem : undefined;
+  });
 
-    if (firstItem.type === 'sensor') {
-      this.sensor.set(firstItem);
-      return;
-    }
+  device = computed(() => {
+    const firstItem = this.singleCard().items[0];
+    return firstItem?.type === 'device' ? firstItem : undefined;
+  });
 
-    this.device.set(firstItem);
-  }
+  cards = computed(() => {
+    return this.dashboardStore.activeTab()?.cards || [];
+  });
 }

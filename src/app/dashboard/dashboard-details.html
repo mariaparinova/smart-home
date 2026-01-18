@@ -1,16 +1,17 @@
-@let dashboard = activeDashboard();
-@let isEditMode = editModeEnabled();
+@let store = dashboardStore;
+@let dashboard = store.activeDashboard();
+@let isEditMode = store.editModeEnabled();
+@let status = store.activeDashboardStatus();
+@let reorderTab = store.reorderTab;
 
-@if (dashboard.status() === 'loading') {
+@if (status === Status.Loading) {
   <mat-progress-spinner
     class="spinner"
     mode="indeterminate"
     aria-label="Loading"
   />
-} @else if (dashboard.status() === 'error') {
-  <p>Dashboard not found</p>
-} @else if (dashboard.status() === 'resolved' && dashboard.value()) {
-  @let tabList = dashboard.value()?.tabs || [];
+} @else {
+  @let tabList = dashboard?.tabs || [];
 
   <div
     class="dashboard-bar"
@@ -21,18 +22,29 @@
         <div class="edit-mode-actions">
           <button
             matButton="outlined"
-            (click)="exitEditMode()"
+            (click)="openCreateCardDialog()"
+            [disabled]="!dashboardStore.activeDashboard()?.tabs?.length"
           >
             ADD CARD
           </button>
-          <button matButton="outlined">DISCARD</button>
-          <button matButton="outlined">SAVE</button>
+          <button
+            matButton="outlined"
+            (click)="store.discardChanges()"
+          >
+            DISCARD
+          </button>
+          <button
+            matButton="outlined"
+            (click)="store.exitEditMode(); store.updateDashboard()"
+          >
+            SAVE
+          </button>
         </div>
       } @else {
         <div class="view-mode-actions">
           <button
             mat-icon-button
-            (click)="enterEditMode()"
+            (click)="store.enterEditMode()"
           >
             <mat-icon>edit</mat-icon>
           </button>
@@ -45,12 +57,13 @@
         </div>
       }
     </div>
+
     <div class="tabs-container">
       <nav
         mat-tab-nav-bar
         [tabPanel]="dashboardTabPanel"
       >
-        @for (tab of tabList; track tab.id) {
+        @for (tab of tabList; track tab.id; let tabIndex = $index) {
           <div
             class="tab-item"
             [class.active]="rla.isActive"
@@ -60,12 +73,17 @@
             @let isTabInEditMode = isEditMode && rla.isActive;
 
             @if (isTabInEditMode) {
-              <button mat-icon-button>
+              <button
+                mat-icon-button
+                (click)="reorderTab({ tabId: tab.id, direction: Direction.Left })"
+                [disabled]="tabIndex === 0"
+              >
                 <mat-icon>arrow_left</mat-icon>
               </button>
             }
 
             <a
+              class="tab-title"
               mat-tab-link
               [routerLink]="['.', tab.id]"
               [active]="rla.isActive"
@@ -74,20 +92,58 @@
             </a>
 
             @if (isTabInEditMode) {
-              <button mat-icon-button>
-                <mat-icon>edit</mat-icon>
+              <button
+                matIconButton
+                [matMenuTriggerFor]="menu"
+                aria-label="Button with a tab editing menu"
+              >
+                <mat-icon>more_vert</mat-icon>
               </button>
-              <button mat-icon-button>
+
+              <mat-menu #menu="matMenu">
+                <button
+                  mat-menu-item
+                  (click)="openTabDialog({ mode: TabFormMode.Update, tabId: tab.id })"
+                >
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button
+                  mat-menu-item
+                  (click)="deleteActiveTab()"
+                >
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+              <button
+                mat-icon-button
+                (click)="reorderTab({ tabId: tab.id, direction: Direction.Right })"
+                [disabled]="tabIndex === tabList.length - 1"
+              >
                 <mat-icon>arrow_right</mat-icon>
               </button>
             }
           </div>
         }
       </nav>
+
+      @if (isEditMode) {
+        <button
+          mat-icon-button
+          (click)="openTabDialog({ mode: TabFormMode.Create, tabId: null })"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      }
     </div>
   </div>
 
   <mat-tab-nav-panel #dashboardTabPanel>
     <router-outlet />
   </mat-tab-nav-panel>
+
+  @if (status === Status.Error) {
+    <p class="not-found-message">Dashboard not found</p>
+  }
 }

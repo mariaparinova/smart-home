@@ -51,6 +51,8 @@ export default defineConfig([
       'unicorn/prefer-global-this': 'off',
       'unicorn/no-array-for-each': 'off',
       'unicorn/prefer-ternary': 'off',
+      'unicorn/explicit-length-check': 'off',
+      'unicorn/no-negated-condition': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
     },
   },

@@ -9,7 +9,7 @@ import { Sensor } from '../../../../models/dashboard.models';
   templateUrl: './single-card-sensor.html',
   styleUrl: './single-card-sensor.scss',
   host: {
-    class: 'single-card-content',
+    class: 'single-card',
   },
 })
 export class SingleCardSensor {

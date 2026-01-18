@@ -46,7 +46,48 @@ html {
     )
   );
 
+  @include mat.tabs-overrides(
+    (
+      container-height: 40px,
+    )
+  );
+
+  @include mat.form-field-overrides(
+    (
+      filled-input-text-placeholder-color: vars.$input-placeholder-color,
+      filled-container-color: vars.$bg-color-neutral,
+      filled-active-indicator-color: vars.$border-color-secondary,
+    )
+  );
+
+  @include mat.dialog-overrides(
+    (
+      container-color: vars.$bg-color-secondary,
+      container-shape: var(--mat-sys-shape-corner-large),
+    )
+  );
+
+  .large-dialog {
+    @include mat.dialog-overrides(
+      (
+        container-min-width: 50%,
+        container-max-width: 100vw,
+        actions-padding: 12px 24px 32px,
+        with-actions-content-padding: 20px 40px,
+      )
+    );
+  }
+
   font-family: vars.$font-family-Roboto;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+[mat-dialog-title] {
+  text-align: center;
+  border-bottom: 1px solid vars.$border-color-secondary;
 }
 
 * {
@@ -106,6 +147,10 @@ h4 {
   color: vars.$icon-color-non-switchable;
 }
 
+.disabled {
+  color: vars.$icon-color-non-switchable;
+}
+
 .vertical-layout {
   flex-direction: column;
 }
@@ -122,17 +167,10 @@ h4 {
   }
 }
 
-.single-card-content {
-  display: flex;
-  justify-content: space-between;
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .label {
-    color: vars.$font-color-secondary;
-  }
+.empty-card-message {
+  padding: 24px 2px;
+  color: vars.$font-color-secondary;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-align: center;
 }

@@ -3,6 +3,8 @@ import { NgOptimizedImage } from '@angular/common';
 import { AuthService } from '../../auth/services/auth.service';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { DashboardForm } from '../../dashboard/components/dashboard-form/dashboard-form';
 
 @Component({
   selector: 'app-sidebar-footer',
@@ -11,8 +13,14 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './sidebar-footer.scss',
 })
 export class SidebarFooter {
-  authService = inject(AuthService);
+  private authService = inject(AuthService);
+  private dialog = inject(MatDialog);
   user = this.authService.user;
+
+  openCreateDashboardDialog() {
+    this.dialog.open(DashboardForm);
+  }
+
   logout() {
     this.authService.logout();
   }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input } from '@angular/core';
 import { MultiCard } from '../../../shared/components/cards/multi-card/multi-card';
 import { SingleCard } from '../../../shared/components/cards/single-card/single-card';
 import { DashboardStore } from '../../dashboard-store/dashboard-store';
@@ -13,8 +13,8 @@ export class CardsList {
   private dashboardStore = inject(DashboardStore);
   tabId = input.required<string>();
 
-  contentForActiveTab = computed(() => {
-    const activeDashboard = this.dashboardStore.activeDashboard().value();
+  cards = computed(() => {
+    const activeDashboard = this.dashboardStore.activeDashboard();
 
     if (!activeDashboard) {
       return [];
@@ -28,4 +28,10 @@ export class CardsList {
 
     return tab.cards;
   });
+
+  constructor() {
+    effect(() => {
+      this.dashboardStore.setActiveTab(this.tabId());
+    });
+  }
 }

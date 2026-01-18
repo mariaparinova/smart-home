@@ -1,0 +1,85 @@
+@use '@angular/material' as mat;
+@use '../../../../vars';
+
+.cards-container {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  justify-content: center;
+  padding: 12px;
+}
+
+.buttonify-container {
+  background: none;
+  border: none;
+}
+
+.card-example {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 16px 16px;
+  background-color: vars.$bg-color-primary;
+  border: 1px solid vars.$border-color;
+  border-radius: vars.$border-radius-s;
+  cursor: pointer;
+  transition: border-color 0.3s;
+
+  &:hover {
+    border-color: vars.$border-color-hover;
+  }
+}
+
+.card-example.selected {
+  border-color: vars.$border-color-active;
+}
+
+.title {
+  letter-spacing: 0.1em;
+}
+
+.card {
+  display: flex;
+  justify-content: space-around;
+  padding: 12px;
+  width: 100%;
+  color: vars.$font-color-secondary;
+  background-color: vars.$bg-color-secondary;
+  border: 1px solid vars.$border-color;
+  border-radius: vars.$border-radius-s;
+}
+
+.card.vertical {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.horizontal .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.vertical .item,
+.single-card .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.single-card .labels-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.single-card .sensor-icon {
+  align-self: start;
+}
+
+.info {
+  text-align: start;
+  color: vars.$font-color-secondary;
+}

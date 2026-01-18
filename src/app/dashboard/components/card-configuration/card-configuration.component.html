@@ -1,0 +1,75 @@
+@let selectedEntities = alreadySelectedOptions();
+@let availableEntities = availableOptions();
+@let activeCard = card();
+
+<span mat-dialog-title>Entities card configuration</span>
+
+<mat-dialog-content class="content">
+  <mat-form-field>
+    <mat-label>Title (optional)</mat-label>
+    <input
+      matInput
+      #titleInput
+      placeholder="{{ activeCard?.title || '' }}"
+    />
+  </mat-form-field>
+
+  <div class="selected-entities">
+    @for (entity of selectedEntities; track entity.id) {
+      <div class="entity-container">
+        <div class="entity">
+          <mat-icon>{{ entity.icon }}</mat-icon>
+          <span class="title">{{ entity.label }}</span>
+        </div>
+        <button
+          mat-icon-button
+          class="icon-button"
+          (click)="deleteEntity(entity.id)"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="select-options">
+    <mat-form-field>
+      <mat-label>Entities</mat-label>
+
+      <input
+        type="text"
+        placeholder="Select an entity"
+        aria-label="Select entity from the list"
+        matInput
+        [formControl]="entityControl"
+        [matAutocomplete]="auto"
+      />
+
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="onOptionSelected($event)"
+      >
+        @for (entity of availableEntities; track entity.id) {
+          <mat-option [value]="entity">{{ entity.label }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button
+    mat-button
+    matButton="outlined"
+    mat-dialog-close
+  >
+    Cancel
+  </button>
+  <button
+    mat-button
+    matButton="outlined"
+    (click)="applyConfiguration()"
+  >
+    Save
+  </button>
+</mat-dialog-actions>

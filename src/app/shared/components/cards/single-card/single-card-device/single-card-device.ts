@@ -1,8 +1,9 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { HighlightActiveDevice } from '../../../../../directives/highlight-active-device/highlight-active-device';
 import { Device } from '../../../../models/dashboard.models';
+import { DashboardStore } from '../../../../../dashboard/dashboard-store/dashboard-store';
 
 @Component({
   selector: 'app-single-card-device',
@@ -14,9 +15,10 @@ import { Device } from '../../../../models/dashboard.models';
   },
 })
 export class SingleCardDevice {
-  tabId = input.required<string>();
-  cardId = input.required<string>();
+  dashboardStore = inject(DashboardStore);
   singleCardDevice = input.required<Device>();
 
-  handleChangeDeviceState = () => (this.singleCardDevice().state = !this.singleCardDevice().state);
+  handleChangeDeviceState = () => {
+    // todo: implement
+  };
 }
