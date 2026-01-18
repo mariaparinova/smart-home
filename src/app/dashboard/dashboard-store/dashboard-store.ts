@@ -10,7 +10,7 @@ import {
 import { SmartHomeApiService } from '../../shared/services/smart-home-api.service';
 import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, switchMap, tap } from 'rxjs';
+import { concatMap, forkJoin, pipe, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { Router } from '@angular/router';
 import { swapArrayItems } from '../../shared/utils/array.utils';
@@ -69,6 +69,36 @@ export const DashboardStore = signalStore(
   withMethods(
     (store, smartHomeApiService = inject(SmartHomeApiService), router = inject(Router)) => {
       const methods = {
+        _updateDeviceLocalState(params: { cardId: string; deviceId: string; state: boolean }) {
+          const { cardId, deviceId, state } = params;
+          const dashboard = store.activeDashboard();
+          const activeTabId = store.activeTabId();
+          if (!dashboard || !activeTabId) return;
+
+          patchState(store, {
+            activeDashboard: {
+              ...dashboard,
+              tabs: dashboard.tabs.map((tab) =>
+                tab.id !== activeTabId
+                  ? tab
+                  : {
+                      ...tab,
+                      cards: tab.cards.map((card) =>
+                        card.id !== cardId
+                          ? card
+                          : {
+                              ...card,
+                              items: card.items.map((item) =>
+                                item.id !== deviceId ? item : { ...item, state },
+                              ),
+                            },
+                      ),
+                    },
+              ),
+            },
+          });
+        },
+
         reorderTab(params: { tabId: string; direction: Direction }) {
           const { tabId, direction } = params;
           const activeDashboard = store.activeDashboard();
@@ -386,6 +416,72 @@ export const DashboardStore = signalStore(
             },
           });
         },
+
+        toggleDevice: rxMethod<{ cardId: string; deviceId: string; newState: boolean }>(
+          pipe(
+            tap(({ cardId, deviceId, newState }) => {
+              const dashboard = store.activeDashboard();
+              const activeTabId = store.activeTabId();
+
+              if (!dashboard || !activeTabId) {
+                return;
+              }
+
+              methods._updateDeviceLocalState({ cardId, deviceId, state: newState });
+            }),
+
+            concatMap(({ cardId, deviceId, newState }) => {
+              const oldState = !newState;
+
+              return smartHomeApiService
+                .updateDeviceState({ deviceId, deviceState: newState })
+                .pipe(
+                  tapResponse({
+                    next: (updatedDevice) => {
+                      console.log(
+                        `Device state updated. Device ID: ${updatedDevice.id}, New state: ${updatedDevice.state}`,
+                      );
+                    },
+                    error: (error) => {
+                      console.warn('Failed to update device state:', error);
+
+                      const dashboard = store.activeDashboard();
+                      const activeTabId = store.activeTabId();
+
+                      if (!dashboard || !activeTabId) {
+                        return;
+                      }
+
+                      methods._updateDeviceLocalState({ cardId, deviceId, state: oldState });
+                    },
+                  }),
+                );
+            }),
+          ),
+        ),
+
+        toggleAllDevices: rxMethod<{ cardId: string; deviceIds: string[]; state: boolean }>(
+          pipe(
+            tap(({ cardId, deviceIds, state }) => {
+              deviceIds.forEach((id) =>
+                methods._updateDeviceLocalState({ cardId, deviceId: id, state }),
+              );
+            }),
+            switchMap(({ deviceIds, state }) => {
+              const requests = deviceIds.map((id) =>
+                smartHomeApiService.updateDeviceState({ deviceId: id, deviceState: state }),
+              );
+              return forkJoin(requests).pipe(
+                tapResponse({
+                  next: () => console.log('All devices updated'),
+                  error: () => {
+                    alert('Failed to update all devices, reload page to see current state');
+                  },
+                }),
+              );
+            }),
+          ),
+        ),
 
         loadDevicesCatalog: rxMethod<void>(
           pipe(

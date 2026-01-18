@@ -10,7 +10,10 @@
 }
 
 @if (deviceData) {
-  <app-single-card-device [singleCardDevice]="deviceData" />
+  <app-single-card-device
+    [singleCardDevice]="deviceData"
+    [cardId]="card.id"
+  />
 }
 
 @if (!sensorData && !deviceData) {

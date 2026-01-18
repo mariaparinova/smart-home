@@ -62,7 +62,7 @@ export class SmartHomeApiService {
     );
   }
 
-  updateDeviceInSingleCard({
+  updateDeviceState({
     deviceId,
     deviceState,
   }: {

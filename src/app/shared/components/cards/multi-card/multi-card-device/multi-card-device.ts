@@ -21,8 +21,4 @@ export class MultiCardDevice {
   multiCardDevice = input.required<Device>();
   cardId = input.required<string>();
   isVerticalLayout = input.required<boolean>();
-
-  handleChangeDeviceState = () => {
-    // todo: implement
-  };
 }

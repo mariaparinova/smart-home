@@ -25,22 +25,50 @@ export class MultiCard implements OnInit {
   isVerticalCardLayout = signal(false);
   displayCommonToggle = signal(true);
 
-  isCommonToggleOn = computed(() => {
-    return this.multiCard().items.some((item) => item.type === 'device' && item.state);
+  card = computed(() => {
+    const initCard = this.multiCard();
+    if (!initCard) {
+      return;
+    }
+
+    const activeTab = this.dashboardStore.activeTab();
+    if (!activeTab) {
+      return;
+    }
+
+    return activeTab.cards.find((card) => card.id === initCard.id);
   });
 
-  setAllDevicesStateInCard(params: MatSlideToggleChange) {
-    this.multiCard().items.forEach((item) => {
+  isCommonToggleOn = computed(() => {
+    return this.card()?.items.some((item) => item.type === 'device' && item.state);
+  });
+
+  setAllDevicesStateInCard(event: MatSlideToggleChange) {
+    const card = this.card();
+    const deviceIds: string[] = [];
+
+    card?.items.forEach((item) => {
       if (item.type === 'device') {
-        item.state = params.checked;
+        deviceIds.push(item.id);
       }
     });
+
+    if (!card || !deviceIds.length) {
+      return;
+    }
+
+    this.dashboardStore.toggleAllDevices({ cardId: card.id, deviceIds, state: event.checked });
   }
 
   ngOnInit() {
-    const devices = this.multiCard().items.filter((item) => item.type === 'device');
-    this.displayCommonToggle.set(devices.length > 1);
+    const multiCard = this.multiCard();
+    if (!multiCard) {
+      return;
+    }
 
-    this.isVerticalCardLayout.set(this.multiCard().layout === 'verticalLayout');
+    const devices = multiCard.items.filter((item) => item.type === 'device');
+
+    this.displayCommonToggle.set(devices.length > 1);
+    this.isVerticalCardLayout.set(multiCard.layout === 'verticalLayout');
   }
 }

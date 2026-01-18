@@ -15,7 +15,9 @@
   [id]="device.id"
   [hideIcon]="true"
   [checked]="device.state"
-  (change)="handleChangeDeviceState()"
+  (change)="
+    dashboardStore.toggleDevice({ cardId: cardId(), deviceId: device.id, newState: $event.checked })
+  "
   [disabled]="isEditMode"
   [aria-label]="device.label"
 />
