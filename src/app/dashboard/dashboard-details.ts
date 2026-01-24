@@ -1,6 +1,5 @@
 import { Component, effect, inject, input } from '@angular/core';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   ActivatedRoute,
   Router,
@@ -17,6 +16,7 @@ import { TabForm, TabFormData, TabFormMode } from './components/tab-form/tab-for
 import { MatDialog } from '@angular/material/dialog';
 import { CardLayoutPicker } from './components/card-layout-picker/card-layout-picker';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-dashboard-details',
@@ -39,19 +39,21 @@ import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
   styleUrl: './dashboard-details.scss',
 })
 export class DashboardDetails {
-  readonly TabFormMode = TabFormMode;
-  readonly Status = Status;
-  readonly Direction = Direction;
+  protected TabFormMode = TabFormMode;
+  protected Status = Status;
+  protected Direction = Direction;
+  private authService = inject(AuthService);
   private router = inject(Router);
   private activatedRouter = inject(ActivatedRoute);
-  private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
-  dashboardStore = inject(DashboardStore);
+  protected dashboardStore = inject(DashboardStore);
   dashboardId = input.required<string>();
 
   constructor() {
     effect(() => {
-      this.dashboardStore.updateActiveDashboardId(this.dashboardId());
+      if (this.authService.isAuthenticated()) {
+        this.dashboardStore.updateActiveDashboardId(this.dashboardId());
+      }
     });
 
     effect(() => {
@@ -73,30 +75,15 @@ export class DashboardDetails {
         this.router.navigate([initTabId], { relativeTo: this.activatedRouter });
       }
     });
-
-    effect(() => {
-      const isActiveDashboardLoadingError =
-        this.dashboardStore.activeDashboardStatus() === Status.Error;
-
-      const isDeletingDashboardError = this.dashboardStore.deleteDashboardStatus() === Status.Error;
-
-      if (isActiveDashboardLoadingError) {
-        this.showNotification('Error occurred. Dashboard was not loaded. Try again later');
-      }
-
-      if (isDeletingDashboardError) {
-        this.showNotification('Error occurred. Dashboard was not deleted. Try again later');
-      }
-    });
   }
 
-  openTabDialog(tabFormData: TabFormData) {
+  protected openTabDialog(tabFormData: TabFormData) {
     this.dialog.open<TabForm, TabFormData>(TabForm, {
       data: tabFormData,
     });
   }
 
-  openCreateCardDialog() {
+  protected openCreateCardDialog() {
     const tabId = this.dashboardStore.activeTabId();
 
     if (!tabId) {
@@ -109,13 +96,7 @@ export class DashboardDetails {
     });
   }
 
-  showNotification = (message: string) => {
-    this.snackBar.open(message, '', {
-      duration: 3000,
-    });
-  };
-
-  deleteDashboard = () => {
+  protected deleteDashboard = () => {
     const userApprove = confirm(
       `Are you sure you want to delete the "${this.dashboardId()?.toUpperCase()}" dashboard?`,
     );
@@ -127,7 +108,7 @@ export class DashboardDetails {
     this.dashboardStore.deleteDashboard(this.dashboardId());
   };
 
-  deleteActiveTab = () => {
+  protected deleteActiveTab = () => {
     this.dashboardStore.deleteActiveTab();
 
     const targetId = this.dashboardStore.activeDashboard()?.tabs?.[0]?.id;

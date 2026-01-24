@@ -14,9 +14,7 @@ import {
 } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { getErrorMessage } from '../../../shared/utils/form.utils';
-
-const ID_MAX_LENGTH = 30;
-const TITLE_MAX_LENGTH = 50;
+import { DASHBOARD_FORM_LIMITS } from '../../../shared/constants/limits';
 
 @Component({
   selector: 'app-dashboard-form',
@@ -41,7 +39,25 @@ export class DashboardForm {
   private dashboardStore = inject(DashboardStore);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
-  submitErrorMessage = signal<string | null>(null);
+  private submitErrorMessage = signal<string | null>(null);
+
+  protected formErrorMessages = {
+    id: {
+      required: VALIDATION_MESSAGES.required,
+      maxlength: VALIDATION_MESSAGES.getMaxLengthErrorMessage(DASHBOARD_FORM_LIMITS.ID_MAX_LENGTH),
+      pattern: VALIDATION_MESSAGES.lowercaseLettersOnly,
+      unique: VALIDATION_MESSAGES.mustBeUnique,
+    },
+    title: {
+      required: VALIDATION_MESSAGES.required,
+      maxlength: VALIDATION_MESSAGES.getMaxLengthErrorMessage(
+        DASHBOARD_FORM_LIMITS.TITLE_MAX_LENGTH,
+      ),
+    },
+    icon: {
+      required: VALIDATION_MESSAGES.required,
+    },
+  };
 
   private uniqueIdValidator: ValidatorFn = (control) => {
     if (!control.value) {
@@ -55,42 +71,29 @@ export class DashboardForm {
     return isNotUnique ? { unique: true } : null;
   };
 
-  formErrorMessages = {
-    id: {
-      required: VALIDATION_MESSAGES.required,
-      maxlength: VALIDATION_MESSAGES.getMaxLengthErrorMessage(ID_MAX_LENGTH),
-      pattern: VALIDATION_MESSAGES.lowercaseLettersOnly,
-      unique: VALIDATION_MESSAGES.mustBeUnique,
-    },
-    title: {
-      required: VALIDATION_MESSAGES.required,
-      maxlength: VALIDATION_MESSAGES.getMaxLengthErrorMessage(TITLE_MAX_LENGTH),
-    },
-    icon: {
-      required: VALIDATION_MESSAGES.required,
-    },
-  };
-
-  dashboardForm = this.formBuilder.nonNullable.group({
+  protected dashboardForm = this.formBuilder.nonNullable.group({
     id: [
       '',
       {
         validators: [
           Validators.required,
-          Validators.maxLength(ID_MAX_LENGTH),
+          Validators.maxLength(DASHBOARD_FORM_LIMITS.ID_MAX_LENGTH),
           Validators.pattern(/^[a-z]+$/),
           this.uniqueIdValidator,
         ],
         updateOn: 'blur',
       },
     ],
-    title: ['', [Validators.required, Validators.maxLength(TITLE_MAX_LENGTH)]],
+    title: [
+      '',
+      [Validators.required, Validators.maxLength(DASHBOARD_FORM_LIMITS.TITLE_MAX_LENGTH)],
+    ],
     icon: ['', [Validators.required]],
   });
 
-  getErrorMessage = getErrorMessage;
+  protected getErrorMessage = getErrorMessage;
 
-  submitForm = (event: SubmitEvent) => {
+  protected submitForm = (event: SubmitEvent) => {
     event.preventDefault();
 
     if (this.dashboardForm.invalid) {

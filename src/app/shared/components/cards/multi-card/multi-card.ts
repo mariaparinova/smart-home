@@ -17,15 +17,13 @@ import { EMPTY_CARD_MESSAGE } from '../messages';
   },
 })
 export class MultiCard implements OnInit {
-  readonly EMPTY_CARD_MESSAGE = EMPTY_CARD_MESSAGE;
-  dashboardStore = inject(DashboardStore);
-
   multiCard = input.required<Card>();
+  protected dashboardStore = inject(DashboardStore);
+  protected emptyCardMessage = EMPTY_CARD_MESSAGE;
+  protected isVerticalCardLayout = signal(false);
+  protected displayCommonToggle = signal(true);
 
-  isVerticalCardLayout = signal(false);
-  displayCommonToggle = signal(true);
-
-  card = computed(() => {
+  private card = computed(() => {
     const initCard = this.multiCard();
     if (!initCard) {
       return;
@@ -39,11 +37,16 @@ export class MultiCard implements OnInit {
     return activeTab.cards.find((card) => card.id === initCard.id);
   });
 
-  isCommonToggleOn = computed(() => {
+  protected isCommonToggleOn = computed(() => {
     return this.card()?.items.some((item) => item.type === 'device' && item.state);
   });
 
-  setAllDevicesStateInCard(event: MatSlideToggleChange) {
+  ngOnInit(): void {
+    this.setInitCommonToggleState();
+    this.setCardLayout();
+  }
+
+  protected setAllDevicesStateInCard(event: MatSlideToggleChange) {
     const card = this.card();
     const deviceIds: string[] = [];
 
@@ -60,7 +63,7 @@ export class MultiCard implements OnInit {
     this.dashboardStore.toggleAllDevices({ cardId: card.id, deviceIds, state: event.checked });
   }
 
-  ngOnInit() {
+  private setInitCommonToggleState() {
     const multiCard = this.multiCard();
     if (!multiCard) {
       return;
@@ -69,6 +72,14 @@ export class MultiCard implements OnInit {
     const devices = multiCard.items.filter((item) => item.type === 'device');
 
     this.displayCommonToggle.set(devices.length > 1);
+  }
+
+  private setCardLayout() {
+    const multiCard = this.multiCard();
+    if (!multiCard) {
+      return;
+    }
+
     this.isVerticalCardLayout.set(multiCard.layout === 'verticalLayout');
   }
 }

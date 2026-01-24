@@ -1,0 +1,13 @@
+export const LOGIN_FORM_LIMITS = {
+  USERNAME_MIN_LENGTH: 2,
+  PASSWORD_MIN_LENGTH: 2,
+};
+
+export const DASHBOARD_FORM_LIMITS = {
+  ID_MAX_LENGTH: 30,
+  TITLE_MAX_LENGTH: 50,
+};
+
+export const TAB_FORM_LIMITS = {
+  TAB_NAME_MAX_LENGTH: 50,
+};

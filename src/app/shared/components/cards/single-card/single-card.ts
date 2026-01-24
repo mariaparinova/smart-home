@@ -16,23 +16,17 @@ import { EMPTY_CARD_MESSAGE } from '../messages';
   },
 })
 export class SingleCard {
-  protected readonly EMPTY_CARD_MESSAGE = EMPTY_CARD_MESSAGE;
-
-  dashboardStore = inject(DashboardStore);
-
   singleCard = input.required<Card>();
+  protected dashboardStore = inject(DashboardStore);
+  protected emptyCardMessage = EMPTY_CARD_MESSAGE;
 
-  sensor = computed(() => {
+  protected sensor = computed(() => {
     const firstItem = this.singleCard().items[0];
     return firstItem?.type === 'sensor' ? firstItem : undefined;
   });
 
-  device = computed(() => {
+  protected device = computed(() => {
     const firstItem = this.singleCard().items[0];
     return firstItem?.type === 'device' ? firstItem : undefined;
-  });
-
-  cards = computed(() => {
-    return this.dashboardStore.activeTab()?.cards || [];
   });
 }

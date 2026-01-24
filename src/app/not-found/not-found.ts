@@ -9,6 +9,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './not-found.scss',
 })
 export class NotFound {
-  authService = inject(AuthService);
-  user = this.authService.user;
+  protected authService = inject(AuthService);
 }

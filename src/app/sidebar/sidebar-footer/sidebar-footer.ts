@@ -14,16 +14,15 @@ import { DashboardStore } from '../../dashboard/dashboard-store/dashboard-store'
   styleUrl: './sidebar-footer.scss',
 })
 export class SidebarFooter {
-  private authService = inject(AuthService);
+  protected authService = inject(AuthService);
+  protected dashboardStore = inject(DashboardStore);
   private dialog = inject(MatDialog);
-  dashboardStore = inject(DashboardStore);
-  user = this.authService.user;
 
-  openCreateDashboardDialog() {
+  protected openCreateDashboardDialog() {
     this.dialog.open(DashboardForm);
   }
 
-  logout() {
+  protected logout() {
     this.authService.logout();
   }
 }

@@ -10,6 +10,5 @@ import { DashboardStore } from '../../dashboard/dashboard-store/dashboard-store'
   styleUrl: './sidebar-menu.scss',
 })
 export class SidebarMenu {
-  private dashboardStore = inject(DashboardStore);
-  dashboards = this.dashboardStore.dashboards;
+  protected dashboardStore = inject(DashboardStore);
 }

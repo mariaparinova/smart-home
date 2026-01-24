@@ -7,9 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { VALIDATION_MESSAGES } from '../../../shared/constants/validation-messages';
 import { getErrorMessage } from '../../../shared/utils/form.utils';
-
-const USERNAME_MIN_LENGTH = 2;
-const PASSWORD_MIN_LENGTH = 2;
+import { LOGIN_FORM_LIMITS } from '../../../shared/constants/limits';
 
 @Component({
   selector: 'app-login',
@@ -22,35 +20,42 @@ export class Login {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  submitErrorMessage = signal<string | null>(null);
+  protected submitErrorMessage = signal<string | null>(null);
 
-  formErrorMessages = {
+  protected formErrorMessages = {
     userName: {
       required: VALIDATION_MESSAGES.required,
-      minlength: VALIDATION_MESSAGES.getMinLengthErrorMessage(USERNAME_MIN_LENGTH),
+      minlength: VALIDATION_MESSAGES.getMinLengthErrorMessage(
+        LOGIN_FORM_LIMITS.USERNAME_MIN_LENGTH,
+      ),
       pattern: VALIDATION_MESSAGES.mustHasLetterOnly,
     },
     password: {
       required: VALIDATION_MESSAGES.required,
-      minlength: VALIDATION_MESSAGES.getMinLengthErrorMessage(PASSWORD_MIN_LENGTH),
+      minlength: VALIDATION_MESSAGES.getMinLengthErrorMessage(
+        LOGIN_FORM_LIMITS.PASSWORD_MIN_LENGTH,
+      ),
     },
   };
 
-  loginForm = this.formBuilder.nonNullable.group({
+  protected loginForm = this.formBuilder.nonNullable.group({
     userName: [
       'Sparks',
       [
         Validators.required,
-        Validators.minLength(USERNAME_MIN_LENGTH),
+        Validators.minLength(LOGIN_FORM_LIMITS.USERNAME_MIN_LENGTH),
         Validators.pattern(/^[a-zA-Z]{2,}$/),
       ],
     ],
-    password: ['consectetur', [Validators.required, Validators.minLength(PASSWORD_MIN_LENGTH)]],
+    password: [
+      'consectetur',
+      [Validators.required, Validators.minLength(LOGIN_FORM_LIMITS.PASSWORD_MIN_LENGTH)],
+    ],
   });
 
-  getErrorMessage = getErrorMessage;
+  protected getErrorMessage = getErrorMessage;
 
-  submitForm = (event: SubmitEvent) => {
+  protected submitForm = (event: SubmitEvent) => {
     event.preventDefault();
 
     if (this.loginForm.invalid) {

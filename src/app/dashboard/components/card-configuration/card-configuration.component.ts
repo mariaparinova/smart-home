@@ -52,24 +52,16 @@ interface EntitiesCardConfigurationDialogData {
 export class EntitiesCardConfiguration implements OnInit {
   private dashboardStore = inject(DashboardStore);
   private dialogRef = inject(MatDialogRef<EntitiesCardConfiguration>);
-  readonly dialogData = inject<EntitiesCardConfigurationDialogData>(MAT_DIALOG_DATA);
-  readonly cardId = this.dialogData.cardId;
+  private dialogData = inject<EntitiesCardConfigurationDialogData>(MAT_DIALOG_DATA);
+  private cardId = this.dialogData.cardId;
+  protected alreadySelectedOptions = signal<(Device | Sensor)[]>([]);
+  private optionsCatalog = computed(() => this.dashboardStore.devicesCatalog());
 
-  private readonly optionsCatalog = computed(() => this.dashboardStore.devicesCatalog());
-
-  alreadySelectedOptions = signal<(Device | Sensor)[]>([]);
-
-  readonly entityControl = new FormControl<Device | Sensor | string>('', {
-    nonNullable: true,
-  });
-
-  readonly searchTerm = toSignal(this.entityControl.valueChanges, { initialValue: '' });
-
-  readonly card = computed(() => {
+  protected card = computed(() => {
     return this.dashboardStore.activeTab()?.cards.find((card) => card.id === this.cardId);
   });
 
-  readonly availableOptions = computed(() => {
+  protected availableOptions = computed(() => {
     const catalog = this.optionsCatalog();
     const selectedIds = new Set(this.alreadySelectedOptions().map((option) => option.id));
     const cardType = this.card()?.layout;
@@ -91,9 +83,19 @@ export class EntitiesCardConfiguration implements OnInit {
     });
   });
 
-  readonly titleInput = viewChild<ElementRef<HTMLInputElement>>('titleInput');
+  protected entityControl = new FormControl<Device | Sensor | string>('', {
+    nonNullable: true,
+  });
 
-  ngOnInit() {
+  protected searchTerm = toSignal(this.entityControl.valueChanges, { initialValue: '' });
+
+  protected titleInput = viewChild<ElementRef<HTMLInputElement>>('titleInput');
+
+  ngOnInit(): void {
+    this.setInitSelectedOptions();
+  }
+
+  private setInitSelectedOptions() {
     const card = this.card();
     if (!card) {
       return;
@@ -113,13 +115,13 @@ export class EntitiesCardConfiguration implements OnInit {
     return this.titleInput()?.nativeElement.value;
   }
 
-  deleteEntity(id: string) {
+  protected deleteEntity(id: string) {
     this.alreadySelectedOptions.update((entities) =>
       entities?.filter((entity) => entity.id !== id),
     );
   }
 
-  applyConfiguration() {
+  protected applyConfiguration() {
     const cardTitle = this.getTitleInputValue() || this.card()?.title || '';
 
     this.dashboardStore.applyCardConfiguration({
@@ -130,7 +132,7 @@ export class EntitiesCardConfiguration implements OnInit {
     this.dialogRef.close();
   }
 
-  onOptionSelected($event: MatAutocompleteSelectedEvent) {
+  protected onOptionSelected($event: MatAutocompleteSelectedEvent) {
     const entity = $event.option.value;
 
     if (this.card()?.layout === CardType.SingleDevice) {

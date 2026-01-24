@@ -3,8 +3,6 @@ import { SidebarHeader } from './sidebar-header/sidebar-header';
 import { SidebarFooter } from './sidebar-footer/sidebar-footer';
 import { SidebarMenu } from './sidebar-menu/sidebar-menu';
 
-const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
-
 @Component({
   selector: 'app-sidebar',
   imports: [SidebarHeader, SidebarMenu, SidebarFooter],
@@ -15,13 +13,14 @@ const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
   },
 })
 export class Sidebar implements OnDestroy {
-  isSidebarOpen = signal(true);
-  isMobile = signal(false);
-  mediaQuery: MediaQueryList | undefined;
+  protected isSidebarOpen = signal(true);
+  private isMobile = signal(false);
+  private mobileMediaQuery = '(max-width: 767px)';
+  protected mediaQuery: MediaQueryList | undefined;
 
   constructor() {
     if (typeof window !== 'undefined') {
-      this.mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+      this.mediaQuery = window.matchMedia(this.mobileMediaQuery);
       this.handleMobileStateChange(this.mediaQuery.matches);
       this.mediaQuery.addEventListener('change', this.mediaQueryListener);
     }
@@ -32,6 +31,10 @@ export class Sidebar implements OnDestroy {
       this.mediaQuery.removeEventListener('change', this.mediaQueryListener);
     }
   }
+
+  protected toggleSidebar = () => {
+    this.isSidebarOpen.update((current) => !current);
+  };
 
   private handleMobileStateChange(isCurrentMobile: boolean) {
     this.isMobile.set(isCurrentMobile);
@@ -45,9 +48,5 @@ export class Sidebar implements OnDestroy {
 
   private mediaQueryListener = (event: MediaQueryListEvent) => {
     this.handleMobileStateChange(event.matches);
-  };
-
-  toggleSidebar = () => {
-    this.isSidebarOpen.update((current) => !current);
   };
 }

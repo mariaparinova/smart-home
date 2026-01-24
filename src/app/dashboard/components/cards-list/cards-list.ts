@@ -11,9 +11,9 @@ import { DashboardStore } from '../../dashboard-store/dashboard-store';
 })
 export class CardsList {
   private dashboardStore = inject(DashboardStore);
-  tabId = input.required<string>();
+  protected tabId = input.required<string>();
 
-  cards = computed(() => {
+  protected cards = computed(() => {
     const activeDashboard = this.dashboardStore.activeDashboard();
 
     if (!activeDashboard) {

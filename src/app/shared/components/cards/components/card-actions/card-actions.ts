@@ -13,26 +13,24 @@ import { EntitiesCardConfiguration } from '../../../../../dashboard/components/c
   styleUrl: './card-actions.scss',
 })
 export class CardActions {
-  readonly Direction = Direction;
-
-  private dialog = inject(MatDialog);
-  dashboardStore = inject(DashboardStore);
-
+  protected Direction = Direction;
   cardId = input.required<string>();
+  private dialog = inject(MatDialog);
+  protected dashboardStore = inject(DashboardStore);
+  private totalCards = computed(() => this.dashboardStore.activeTab()?.cards);
+  protected cardIndex = computed(() =>
+    this.totalCards()?.findIndex((card) => card.id === this.cardId()),
+  );
 
-  totalCards = computed(() => this.dashboardStore.activeTab()?.cards);
-
-  cardIndex = computed(() => this.totalCards()?.findIndex((card) => card.id === this.cardId()));
-
-  isFirstCard = computed(() => {
+  protected isFirstCard = computed(() => {
     return this.totalCards()?.at(0)?.id === this.cardId();
   });
 
-  isLastCard = computed(() => {
+  protected isLastCard = computed(() => {
     return this.totalCards()?.at(-1)?.id === this.cardId();
   });
 
-  moveCard = (direction: Direction) => {
+  protected moveCard = (direction: Direction) => {
     const tabId = this.dashboardStore.activeTabId();
 
     if (!tabId) {
@@ -46,7 +44,7 @@ export class CardActions {
     });
   };
 
-  openCreateCardItemsDialog() {
+  protected openCreateCardItemsDialog() {
     this.dialog.open(EntitiesCardConfiguration, {
       data: {
         cardId: this.cardId(),

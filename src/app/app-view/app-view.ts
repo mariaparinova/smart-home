@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Sidebar } from '../sidebar/sidebar';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
@@ -10,12 +10,11 @@ import { DashboardStore } from '../dashboard/dashboard-store/dashboard-store';
   templateUrl: './app-view.html',
   styleUrl: './app-view.scss',
 })
-export class AppView {
+export class AppView implements OnInit {
   private dashboardStore = inject(DashboardStore);
-  private authService = inject(AuthService);
-  isUserAuthenticated = this.authService.isAuthenticated;
+  protected authService = inject(AuthService);
 
-  constructor() {
+  ngOnInit(): void {
     this.dashboardStore.loadDashboards();
   }
 }

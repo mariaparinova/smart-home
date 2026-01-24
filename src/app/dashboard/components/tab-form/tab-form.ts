@@ -13,6 +13,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
+import { TAB_FORM_LIMITS } from '../../../shared/constants/limits';
 
 export enum TabFormMode {
   Create = 'create',
@@ -28,11 +29,6 @@ export type TabFormData =
       mode: TabFormMode.Update;
       tabId: string;
     };
-
-const CREATE_TAB_TITLE = 'Create new tab';
-const UPDATE_TAB_TITLE = 'Update tab';
-
-const TAB_NAME_MAX_LENGTH = 50;
 
 @Component({
   selector: 'app-tab-form',
@@ -54,9 +50,9 @@ export class TabForm implements OnInit {
   private dashboardStore = inject(DashboardStore);
   private formBuilder = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<TabForm>);
-  readonly dialogData = inject<TabFormData>(MAT_DIALOG_DATA);
-  readonly formTitle =
-    this.dialogData.mode === TabFormMode.Create ? CREATE_TAB_TITLE : UPDATE_TAB_TITLE;
+  private dialogData = inject<TabFormData>(MAT_DIALOG_DATA);
+  protected formTitle =
+    this.dialogData.mode === TabFormMode.Create ? 'Create new tab' : 'Update tab';
 
   ngOnInit(): void {
     if (this.dialogData.mode === TabFormMode.Update) {
@@ -85,26 +81,26 @@ export class TabForm implements OnInit {
     return null;
   };
 
-  formErrorMessages = {
+  protected formErrorMessages = {
     tabTitle: {
       required: VALIDATION_MESSAGES.required,
-      maxlength: VALIDATION_MESSAGES.getMaxLengthErrorMessage(TAB_NAME_MAX_LENGTH),
+      maxlength: VALIDATION_MESSAGES.getMaxLengthErrorMessage(TAB_FORM_LIMITS.TAB_NAME_MAX_LENGTH),
       unique: 'That value is already used as a Title or Id',
     },
   };
 
-  tabForm = this.formBuilder.nonNullable.control('', {
+  protected tabForm = this.formBuilder.nonNullable.control('', {
     validators: [
       Validators.required,
-      Validators.maxLength(TAB_NAME_MAX_LENGTH),
+      Validators.maxLength(TAB_FORM_LIMITS.TAB_NAME_MAX_LENGTH),
       this.uniqueValidator,
     ],
     updateOn: 'blur',
   });
 
-  getErrorMessage = getErrorMessage;
+  protected getErrorMessage = getErrorMessage;
 
-  submitForm = (event: SubmitEvent) => {
+  protected submitForm = (event: SubmitEvent) => {
     event.preventDefault();
 
     if (this.tabForm.invalid) {

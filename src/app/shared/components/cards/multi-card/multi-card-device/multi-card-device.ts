@@ -16,8 +16,7 @@ import { DashboardStore } from '../../../../../dashboard/dashboard-store/dashboa
   },
 })
 export class MultiCardDevice {
-  dashboardStore = inject(DashboardStore);
-
+  protected dashboardStore = inject(DashboardStore);
   multiCardDevice = input.required<Device>();
   cardId = input.required<string>();
   isVerticalLayout = input.required<boolean>();

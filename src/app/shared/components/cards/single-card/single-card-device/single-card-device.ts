@@ -15,7 +15,7 @@ import { DashboardStore } from '../../../../../dashboard/dashboard-store/dashboa
   },
 })
 export class SingleCardDevice {
-  dashboardStore = inject(DashboardStore);
+  protected dashboardStore = inject(DashboardStore);
   singleCardDevice = input.required<Device>();
   cardId = input.required<string>();
 }
