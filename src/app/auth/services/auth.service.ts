@@ -4,22 +4,21 @@ import { UserProfile } from '../../shared/models/user.models';
 import { SmartHomeApiService } from '../../shared/services/smart-home-api.service';
 import { Router } from '@angular/router';
 
-const TOKEN_KEY = 'auth-token';
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private router = inject(Router);
   private smartHomeApiService = inject(SmartHomeApiService);
+  private TOKEN_KEY = 'auth-token';
 
-  private _token = signal<string | null>(localStorage.getItem(TOKEN_KEY));
-  readonly token = this._token.asReadonly();
+  private _token = signal<string | null>(localStorage.getItem(this.TOKEN_KEY));
+  token = this._token.asReadonly();
 
   private _user = signal<UserProfile | null>(null);
-  readonly user = this._user.asReadonly();
+  user = this._user.asReadonly();
 
-  readonly isAuthenticated = computed(() => this._user() !== null);
+  isAuthenticated = computed(() => this._user() !== null);
 
   init(): Observable<UserProfile | null> {
     if (this._token() === null) {
@@ -44,9 +43,9 @@ export class AuthService {
 
   private setToken(value: string | null): void {
     if (value) {
-      localStorage.setItem(TOKEN_KEY, value);
+      localStorage.setItem(this.TOKEN_KEY, value);
     } else {
-      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(this.TOKEN_KEY);
     }
 
     this._token.set(value);

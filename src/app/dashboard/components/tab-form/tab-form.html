@@ -1,0 +1,33 @@
+<span mat-dialog-title>{{ formTitle }}</span>
+
+<form (submit)="submitForm($event)">
+  <mat-dialog-content>
+    <mat-form-field>
+      <input
+        matInput
+        [formControl]="tabForm"
+      />
+      @if (getErrorMessage(tabForm, formErrorMessages.tabTitle); as error) {
+        <mat-error>{{ error }}</mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="center">
+    <button
+      mat-button
+      matButton="outlined"
+      mat-dialog-close
+      type="button"
+    >
+      Cancel
+    </button>
+    <button
+      mat-button
+      matButton="outlined"
+      type="submit"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>

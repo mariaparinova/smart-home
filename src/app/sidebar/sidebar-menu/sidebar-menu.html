@@ -1,8 +1,8 @@
-@let menu = dashboards();
+@let dashboards = dashboardStore.dashboards();
 
-@if (menu?.length) {
+@if (dashboards?.length) {
   <nav class="navigation">
-    @for (menuItem of menu; track menuItem.id) {
+    @for (menuItem of dashboards; track menuItem.id) {
       <a
         class="item"
         [routerLink]="['dashboard', menuItem.id]"
@@ -12,7 +12,7 @@
           [fontIcon]="menuItem.icon"
           class="icon"
         />
-        <span>{{ menuItem.title }}</span>
+        <span class="text-capitalize">{{ menuItem.title }}</span>
       </a>
     }
   </nav>

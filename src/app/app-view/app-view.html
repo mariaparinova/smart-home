@@ -1,6 +1,4 @@
-@let userAuthenticated = isUserAuthenticated();
-
-@if (userAuthenticated) {
+@if (authService.isAuthenticated()) {
   <app-sidebar />
 }
 

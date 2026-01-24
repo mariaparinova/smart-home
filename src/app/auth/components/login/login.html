@@ -5,7 +5,7 @@
 <form
   class="login-form"
   [formGroup]="loginForm"
-  (submit)="submitLoginForm()"
+  (submit)="submitForm($event)"
 >
   <h4 class="title">Welcome home!</h4>
   <mat-form-field>
@@ -41,7 +41,7 @@
     log in
   </button>
 
-  @if (loginFormSubmitErrorMessage(); as submitError) {
+  @if (submitErrorMessage(); as submitError) {
     <span class="error">{{ submitError }}</span>
   }
 </form>

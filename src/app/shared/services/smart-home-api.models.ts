@@ -1,3 +1,5 @@
+import { CardType } from '../models/dashboard.models';
+
 export interface LoginRequestDto {
   userName: string;
   password: string;
@@ -30,7 +32,7 @@ export interface TabDto {
 export interface CardDto {
   id: string;
   title: string;
-  layout: 'horizontalLayout' | 'verticalLayout' | 'singleDevice';
+  layout: CardType;
   items: (SensorDto | DeviceDto)[];
 }
 
@@ -39,6 +41,7 @@ export interface DeviceDto {
   icon: string;
   label: string;
   state: boolean;
+  id: string;
 }
 
 export interface SensorDto {
@@ -49,4 +52,5 @@ export interface SensorDto {
     amount: number;
     unit: string;
   };
+  id: string;
 }

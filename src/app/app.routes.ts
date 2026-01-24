@@ -7,6 +7,7 @@ import { authGuard } from './auth/guards/auth-guard';
 import { guestGuard } from './auth/guards/guest-guard';
 import { inject } from '@angular/core';
 import { AuthService } from './auth/services/auth.service';
+import { DashboardStore } from './dashboard/dashboard-store/dashboard-store';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,18 @@ export const routes: Routes = [
       {
         path: ':dashboardId',
         component: DashboardDetails,
+        canDeactivate: [
+          () => {
+            const dashboardStore = inject(DashboardStore);
+
+            if (!dashboardStore.editModeEnabled()) {
+              return true;
+            }
+
+            alert('You have unsaved changes. Please save them before leaving the page');
+            return false;
+          },
+        ],
         children: [
           {
             path: ':tabId',

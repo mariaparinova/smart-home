@@ -1,18 +1,23 @@
 @let device = multiCardDevice();
+@let isEditMode = dashboardStore.editModeEnabled();
 
 <mat-icon
   class="dashboard-icon"
   [fontIcon]="device.icon"
   appHighlightActiveDevice
-  [isActive]="device.state"
+  [isActive]="!isEditMode && device.state"
+  [class.disabled]="isEditMode"
 />
 
 <span>{{ device.label }}</span>
 
 <mat-slide-toggle
-  [id]="device.label"
+  [id]="device.id"
   [hideIcon]="true"
   [checked]="device.state"
-  (change)="handleChangeDeviceState($event)"
+  (change)="
+    dashboardStore.toggleDevice({ cardId: cardId(), deviceId: device.id, newState: $event.checked })
+  "
+  [disabled]="isEditMode"
   [aria-label]="device.label"
 />

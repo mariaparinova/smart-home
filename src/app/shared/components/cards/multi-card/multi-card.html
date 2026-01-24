@@ -3,16 +3,19 @@
 @let commonToggleOn = isCommonToggleOn();
 @let isVerticalContainerLayout = isVerticalCardLayout();
 @let isVerticalItemsLayout = !isVerticalContainerLayout;
-@let currentTabId = tabId();
+@let store = dashboardStore;
+@let editModeEnabled = store.editModeEnabled;
 
 <div class="card-header">
-  <h4>{{ card.title }}</h4>
+  <h4 class="title">{{ card.title }}</h4>
+
   @if (shouldRenderCommonToggle) {
     <mat-slide-toggle
       [hideIcon]="true"
       [aria-label]="card.title"
       [checked]="commonToggleOn"
       (change)="setAllDevicesStateInCard($event)"
+      [disabled]="dashboardStore.editModeEnabled()"
     />
   }
 </div>
@@ -21,12 +24,11 @@
   class="card-content"
   [class.vertical-layout]="isVerticalContainerLayout"
 >
-  @for (cardItem of card.items; track cardItem.label) {
+  @for (cardItem of card.items; track cardItem.id) {
     @if (cardItem.type === 'device') {
       <app-multi-card-device
         [isVerticalLayout]="isVerticalItemsLayout"
         [multiCardDevice]="cardItem"
-        [tabId]="currentTabId"
         [cardId]="card.id"
       />
     }
@@ -37,5 +39,11 @@
         [multiCardSensor]="cardItem"
       />
     }
+  } @empty {
+    <p class="empty-card-message">{{ emptyCardMessage }}</p>
   }
 </div>
+
+@if (editModeEnabled()) {
+  <app-card-actions [cardId]="card.id" />
+}

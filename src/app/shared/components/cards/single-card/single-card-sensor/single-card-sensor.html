@@ -1,9 +1,8 @@
 @let sensor = singleCardSensor();
 
-<div class="content">
-  <span class="label">{{ sensor.label }}</span>
-  <h4>{{ sensor.value | sensorValue }}</h4>
-</div>
+<p class="title">{{ sensor.label }}</p>
+
+<p>{{ sensor.value | sensorValue }}</p>
 
 <mat-icon
   class="sensor-icon"

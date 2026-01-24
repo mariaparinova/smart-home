@@ -1,0 +1,55 @@
+@use '@angular/material' as mat;
+@use '../../../../vars' as vars;
+
+:host {
+  @include mat.button-toggle-overrides(
+    (
+      background-color: vars.$bg-color-neutral,
+      text-color: vars.$font-color-secondary,
+      label-text-tracking: 5px,
+    )
+  );
+}
+
+.content {
+  border-bottom: 1px solid vars.$border-color-secondary;
+}
+
+.mat-mdc-form-field {
+  margin-top: 12px;
+}
+
+.selected-entities {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 8px;
+  width: 100%;
+}
+
+.entity-container {
+  display: flex;
+  gap: 2px;
+}
+
+.entity {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-grow: 1;
+  padding: 4px 8px;
+  color: vars.$font-color-secondary;
+  background-color: vars.$bg-color-neutral;
+  border-bottom: 1px solid vars.$border-color-secondary;
+}
+
+.mat-button-toggle {
+  flex-grow: 1;
+  justify-content: start;
+  gap: 4px;
+  border-bottom: 1px solid vars.$border-color-secondary;
+}
+
+.icon-button {
+  color: vars.$font-color-secondary;
+}

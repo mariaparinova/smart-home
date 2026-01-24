@@ -1,19 +1,29 @@
 @let device = singleCardDevice();
+@let isEditMode = dashboardStore.editModeEnabled();
 
 <div class="content">
-  <span class="label">{{ device.label }}</span>
+  <span class="title">{{ device.label }}</span>
   <h4>{{ device.state ? 'ON' : 'OFF' }}</h4>
 </div>
 
-<button
-  mat-icon-button
-  aria-label="icon"
-  (click)="handleChangeDeviceState()"
+<mat-button-toggle
+  [id]="device.id"
+  [checked]="device.state"
+  (change)="
+    dashboardStore.toggleDevice({
+      cardId: cardId(),
+      deviceId: device.id,
+      newState: $event.source.checked,
+    })
+  "
+  [disabled]="isEditMode"
+  [aria-label]="device.label"
 >
   <mat-icon
     class="dashboard-icon"
     [fontIcon]="device.icon"
     appHighlightActiveDevice
-    [isActive]="device.state"
+    [isActive]="!isEditMode && device.state"
+    [class.disabled]="isEditMode"
   />
-</button>
+</mat-button-toggle>

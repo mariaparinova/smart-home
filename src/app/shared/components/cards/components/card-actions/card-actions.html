@@ -1,0 +1,37 @@
+@let store = dashboardStore;
+
+<button
+  mat-button
+  (click)="openCreateCardItemsDialog(); dashboardStore.loadDevicesCatalog()"
+>
+  EDIT
+</button>
+
+<div class="order-controls-container">
+  <button
+    mat-icon-button
+    (click)="moveCard(Direction.Left)"
+    [disabled]="isFirstCard()"
+  >
+    <mat-icon>arrow_left</mat-icon>
+  </button>
+
+  <div class="order-number">
+    {{ cardIndex()! + 1 }}
+  </div>
+
+  <button
+    mat-icon-button
+    (click)="moveCard(Direction.Right)"
+    [disabled]="isLastCard()"
+  >
+    <mat-icon>arrow_right</mat-icon>
+  </button>
+</div>
+
+<button
+  mat-icon-button
+  (click)="store.deleteCardFromActiveDashboard(cardId())"
+>
+  <mat-icon class="dashboard-icon active">delete</mat-icon>
+</button>

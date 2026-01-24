@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { About } from './about';
+import { CardLayoutPicker } from './card-layout-picker';
 
-describe('About', () => {
-  let component: About;
-  let fixture: ComponentFixture<About>;
+describe('CardForm', () => {
+  let component: CardLayoutPicker;
+  let fixture: ComponentFixture<CardLayoutPicker>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [About],
+      imports: [CardLayoutPicker],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(About);
+    fixture = TestBed.createComponent(CardLayoutPicker);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

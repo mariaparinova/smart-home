@@ -1,5 +1,86 @@
+@use '@angular/material' as mat;
 @use '../../vars';
 
-.dashboard-tabs {
+.dashboard-bar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 50px;
+  padding: 4px 12px 0;
   background-color: vars.$bg-color-accent;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background-color: vars.$border-color;
+  }
+
+  &.edit-mode {
+    background-color: vars.$bg-color-active;
+  }
+}
+
+.actions {
+  align-self: flex-end;
+}
+
+.tabs-container {
+  @include mat.icon-button-overrides(
+    (
+      icon-color: vars.$icon-color-active,
+    )
+  );
+
+  display: flex;
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.tab-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  transition: width 0.2s;
+}
+
+.tab-item.active {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: vars.$border-color-active;
+  }
+}
+
+.view-mode-actions,
+.edit-mode-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.tab-title {
+  text-transform: capitalize;
+}
+
+.not-found-message {
+  color: vars.$font-color-secondary;
+  text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  .dashboard-bar {
+    padding: 4px 4px 0;
+  }
 }

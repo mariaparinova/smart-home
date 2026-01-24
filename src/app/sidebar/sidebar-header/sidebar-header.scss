@@ -5,6 +5,8 @@
   align-items: center;
   gap: 12px;
   padding: 0 12px;
+  min-height: 50px;
+  border-bottom: 1px solid vars.$border-color;
 }
 
 .title {

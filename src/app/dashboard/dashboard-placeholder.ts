@@ -1,6 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
-import { DashboardService } from './services/dashboard-service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DashboardStore } from './dashboard-store/dashboard-store';
 
 @Component({
   selector: 'app-dashboard-placeholder',
@@ -8,15 +8,15 @@ import { ActivatedRoute, Router } from '@angular/router';
     '<div class="empty-dashboard">You don’t have any dashboards yet. They’ll appear here as soon as you create them.</div>',
 })
 export class DashboardPlaceholder {
-  private dashboardService = inject(DashboardService);
+  private dashboardStore = inject(DashboardStore);
   private router = inject(Router);
   private activatedRouter = inject(ActivatedRoute);
 
   constructor() {
     effect(() => {
-      const dashboards = this.dashboardService.dashboards();
+      const dashboards = this.dashboardStore.dashboards();
 
-      if (dashboards && dashboards.length > 0) {
+      if (dashboards?.length) {
         this.router.navigate([dashboards[0].id], {
           replaceUrl: true,
           relativeTo: this.activatedRouter,

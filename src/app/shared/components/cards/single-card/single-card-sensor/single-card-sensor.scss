@@ -1,0 +1,21 @@
+@use '../../../../../../vars' as vars;
+
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  position: relative;
+  top: 4px;
+  color: vars.$font-color-secondary;
+  text-transform: capitalize;
+}
+
+.sensor-icon {
+  position: absolute;
+  top: 0;
+  right: 8px;
+}

@@ -1,17 +1,32 @@
-@let userProfile = user();
+@let user = authService.user();
+@let isEditMode = dashboardStore.editModeEnabled();
 
-@if (userProfile) {
-  <div class="user-details">
-    <div class="user-initials">{{ userProfile.initials }}</div>
-    <div class="user-full-name">{{ userProfile.fullName }}</div>
+@if (user) {
+  <div class="add-dashboard">
+    <button
+      mat-icon-button
+      class="icon-button"
+      [disabled]="isEditMode"
+      (click)="openCreateDashboardDialog()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+    <span>Add Dashboard</span>
   </div>
-  <button
-    matButton="outlined"
-    (click)="logout()"
-  >
-    Log out
-    <mat-icon>exit_to_app</mat-icon>
-  </button>
+  <div class="log-out">
+    <button
+      mat-icon-button
+      class="icon-button"
+      (click)="logout()"
+    >
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <span>Log out</span>
+  </div>
+  <div class="user-details">
+    <div class="user-initials">{{ user.initials }}</div>
+    <div class="user-full-name">{{ user.fullName }}</div>
+  </div>
 } @else {
   <img
     ngSrc="/rss-logo.svg"
