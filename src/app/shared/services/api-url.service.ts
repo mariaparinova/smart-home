@@ -25,11 +25,8 @@ export class ApiUrlService {
       }),
       catchError(() => {
         this.apiBaseUrl = localUrl;
-        confirm(`
-Remote Smart Home API is not available.
-You need to run local backend server - check instruction here:
-https://github.com/mariaparinova/smart-home/blob/dev/README.md#backend-setup
-`);
+        confirm('Remote Smart Home API is not available. \n You need to run local backend server - check instruction here: \n https://github.com/mariaparinova/smart-home/blob/dev/README.md#backend-setup');
+
         return of(undefined);
       }),
     );
