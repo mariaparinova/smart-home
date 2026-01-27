@@ -12,13 +12,14 @@ import {
 } from './smart-home-api.models';
 import { LoginData, UserProfile } from '../models/user.models';
 import { Dashboard, Device, Sensor, SideBarItem } from '../models/dashboard.models';
-import { environment } from '../../../environments/environment';
+import { ApiUrlService } from './api-url.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SmartHomeApiService {
   private http = inject(HttpClient);
+  private apiUrlService = inject(ApiUrlService);
 
   getToken(userData: { userName: string; password: string }): Observable<LoginData> {
     const { userName, password } = userData;
@@ -29,26 +30,26 @@ export class SmartHomeApiService {
     };
 
     return this.http.post<LoginResponseDto>(
-      `${environment.smartHomeApiBaseUrl}/api/user/login`,
+      `${this.apiUrlService.getApiBaseUrl()}/api/user/login`,
       body,
     );
   }
 
   getUser(): Observable<UserProfile> {
     return this.http.get<UserProfileResponseDto>(
-      `${environment.smartHomeApiBaseUrl}/api/user/profile`,
+      `${this.apiUrlService.getApiBaseUrl()}/api/user/profile`,
     );
   }
 
   getDashboards(): Observable<SideBarItem[]> {
     return this.http.get<SideBarItemDto[]>(
-      `${environment.smartHomeApiBaseUrl}/api/user/dashboards`,
+      `${this.apiUrlService.getApiBaseUrl()}/api/user/dashboards`,
     );
   }
 
   getDashboard(dashboardId: string): Observable<Dashboard> {
     return this.http
-      .get<DashboardDto>(`${environment.smartHomeApiBaseUrl}/api/dashboards/${dashboardId}`)
+      .get<DashboardDto>(`${this.apiUrlService.getApiBaseUrl()}/api/dashboards/${dashboardId}`)
       .pipe(
         map((dashboardDto) => {
           return { ...dashboardDto, id: dashboardId };
@@ -58,7 +59,7 @@ export class SmartHomeApiService {
 
   getDevices(): Observable<(Device | Sensor)[]> {
     return this.http.get<(DeviceDto | SensorDto)[]>(
-      `${environment.smartHomeApiBaseUrl}/api/devices`,
+      `${this.apiUrlService.getApiBaseUrl()}/api/devices`,
     );
   }
 
@@ -71,14 +72,14 @@ export class SmartHomeApiService {
   }): Observable<Device> {
     const body = { state: deviceState };
     return this.http.patch<DeviceDto>(
-      `${environment.smartHomeApiBaseUrl}/api/devices/${deviceId}`,
+      `${this.apiUrlService.getApiBaseUrl()}/api/devices/${deviceId}`,
       body,
     );
   }
 
   createDashboard(dashboard: SideBarItem): Observable<SideBarItem> {
     return this.http.post<SideBarItemDto>(
-      `${environment.smartHomeApiBaseUrl}/api/dashboards`,
+      `${this.apiUrlService.getApiBaseUrl()}/api/dashboards`,
       dashboard,
     );
   }
@@ -89,7 +90,7 @@ export class SmartHomeApiService {
     };
 
     return this.http
-      .put<DashboardDto>(`${environment.smartHomeApiBaseUrl}/api/dashboards/${dashboard.id}`, body)
+      .put<DashboardDto>(`${this.apiUrlService.getApiBaseUrl()}/api/dashboards/${dashboard.id}`, body)
       .pipe(
         map((dashboardDto) => {
           return { ...dashboardDto, id: dashboard.id };
@@ -99,7 +100,7 @@ export class SmartHomeApiService {
 
   deleteDashboard(dashboardId: string): Observable<void> {
     return this.http.delete<void>(
-      `${environment.smartHomeApiBaseUrl}/api/dashboards/${dashboardId}`,
+      `${this.apiUrlService.getApiBaseUrl()}/api/dashboards/${dashboardId}`,
     );
   }
 }
