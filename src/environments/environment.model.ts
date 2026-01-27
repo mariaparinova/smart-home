@@ -1,3 +1,4 @@
 export interface Environment {
-  smartHomeApiBaseUrl: string;
+  localSmartHomeApiBaseUrl: string;
+  remoteSmartHomeApiBaseUrl?: string;
 }
