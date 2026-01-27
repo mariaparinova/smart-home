@@ -20,9 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(() => {
       const authService = inject(AuthService);
       const apiUrlService = inject(ApiUrlService);
-      return apiUrlService.init().pipe(
-        concatMap(() => authService.init())
-      );
+      return apiUrlService.init().pipe(concatMap(() => authService.init()));
     }),
 
     provideRouter(

@@ -90,7 +90,10 @@ export class SmartHomeApiService {
     };
 
     return this.http
-      .put<DashboardDto>(`${this.apiUrlService.getApiBaseUrl()}/api/dashboards/${dashboard.id}`, body)
+      .put<DashboardDto>(
+        `${this.apiUrlService.getApiBaseUrl()}/api/dashboards/${dashboard.id}`,
+        body,
+      )
       .pipe(
         map((dashboardDto) => {
           return { ...dashboardDto, id: dashboard.id };
