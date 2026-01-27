@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { catchError, map, Observable, of, retry, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -8,29 +8,28 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiUrlService {
   private http = inject(HttpClient);
-  private apiBaseUrl = signal<string | undefined>(undefined);
-  isApiBaseUrl = computed(() => this.apiBaseUrl !== undefined);
+  private apiBaseUrl: string | undefined;
 
   init(): Observable<void> {
     const remoteUrl = environment.remoteSmartHomeApiBaseUrl;
     const localUrl = environment.localSmartHomeApiBaseUrl;
 
     if (!remoteUrl) {
-      this.apiBaseUrl.set(localUrl);
+      this.apiBaseUrl = localUrl;
       return of(undefined);
     }
 
-    return this.http.get(remoteUrl).pipe(
+    return this.http.get(remoteUrl, { responseType: 'text' }).pipe(
       retry({
-        count: 3,
+        count: 2,
         delay: 2000,
       }),
       tap(() => {
-        this.apiBaseUrl.set(remoteUrl);
+        this.apiBaseUrl = remoteUrl;
       }),
       map(() => undefined),
       catchError(() => {
-        this.apiBaseUrl.set(localUrl);
+        this.apiBaseUrl = localUrl;
         confirm(
           'Remote Smart Home API is not available. \n You need to run local backend server - check instruction here: \n https://github.com/mariaparinova/smart-home/blob/dev/README.md#backend-setup',
         );
@@ -41,6 +40,6 @@ export class ApiUrlService {
   }
 
   getApiBaseUrl(): string {
-    return this.apiBaseUrl() || environment.localSmartHomeApiBaseUrl;
+    return this.apiBaseUrl || environment.localSmartHomeApiBaseUrl;
   }
 }
