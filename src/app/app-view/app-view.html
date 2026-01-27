@@ -5,3 +5,11 @@
 <section class="page-content">
   <router-outlet />
 </section>
+
+@if (!apiUrlService.isApiBaseUrl()) {
+  <mat-progress-spinner
+    class="spinner"
+    mode="indeterminate"
+    aria-label="Loading"
+  />
+}

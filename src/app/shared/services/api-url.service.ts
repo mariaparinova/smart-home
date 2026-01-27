@@ -1,6 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, retry, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -8,24 +8,32 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiUrlService {
   private http = inject(HttpClient);
-  private apiBaseUrl: string | undefined;
+  private apiBaseUrl = signal<string | undefined>(undefined);
+  isApiBaseUrl = computed(() => this.apiBaseUrl !== undefined);
 
   init(): Observable<void> {
     const remoteUrl = environment.remoteSmartHomeApiBaseUrl;
     const localUrl = environment.localSmartHomeApiBaseUrl;
 
     if (!remoteUrl) {
-      this.apiBaseUrl = localUrl;
+      this.apiBaseUrl.set(localUrl);
       return of(undefined);
     }
 
     return this.http.get(remoteUrl).pipe(
-      map(() => {
-        this.apiBaseUrl = remoteUrl;
+      retry({
+        count: 3,
+        delay: 2000,
       }),
+      tap(() => {
+        this.apiBaseUrl.set(remoteUrl);
+      }),
+      map(() => undefined),
       catchError(() => {
-        this.apiBaseUrl = localUrl;
-        confirm('Remote Smart Home API is not available. \n You need to run local backend server - check instruction here: \n https://github.com/mariaparinova/smart-home/blob/dev/README.md#backend-setup');
+        this.apiBaseUrl.set(localUrl);
+        confirm(
+          'Remote Smart Home API is not available. \n You need to run local backend server - check instruction here: \n https://github.com/mariaparinova/smart-home/blob/dev/README.md#backend-setup',
+        );
 
         return of(undefined);
       }),
@@ -33,6 +41,6 @@ export class ApiUrlService {
   }
 
   getApiBaseUrl(): string {
-    return this.apiBaseUrl || environment.localSmartHomeApiBaseUrl;
+    return this.apiBaseUrl() || environment.localSmartHomeApiBaseUrl;
   }
 }
