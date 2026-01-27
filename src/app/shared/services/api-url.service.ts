@@ -9,9 +9,11 @@ import { HttpClient } from '@angular/common/http';
 export class ApiUrlService {
   private http = inject(HttpClient);
   private apiBaseUrl: string | undefined;
-  private localBackendInstruction = `Remote Smart Home API is not available.
-        You need to run local backend server - check instruction here:
-        https://github.com/mariaparinova/smart-home/blob/dev/README.md#backend-setup`;
+  private localBackendInstruction = `
+  Remote Smart Home API is not available.
+  You need to run local backend server - check instruction here:
+  https://github.com/mariaparinova/smart-home/blob/dev/README.md#backend-setup
+  `;
 
   init(): Observable<void> {
     const remoteUrl = environment.remoteSmartHomeApiBaseUrl;
@@ -28,7 +30,7 @@ export class ApiUrlService {
       }),
       catchError(() => {
         this.apiBaseUrl = localUrl;
-        alert(this.localBackendInstruction);
+        confirm(this.localBackendInstruction);
         return of(undefined);
       })
     );
